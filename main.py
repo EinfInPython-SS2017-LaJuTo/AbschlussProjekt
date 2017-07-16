@@ -1,7 +1,7 @@
+#!/usr/bin/env python3
+
 import pygame
 from Tile import Grass, Path
-
-
 
 
 def main():
