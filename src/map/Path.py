@@ -1,9 +1,10 @@
-from pygame import Rect
+import pygame as pg
 
 class Path:
     points = []
     subpaths = []
-    width = 10
+    width = 20
+    color = (200,200,100)
     
     def __init__(self,file):
         self.readWaypoints(file)
@@ -17,12 +18,24 @@ class Path:
     
     def assignSubpaths(self):
         for i in range(len(self.points)-1):
-            left = self.points[i][0]
-            top = self.points[i][1]
-            width = abs(left - self.points[i+1][0])
-            height = abs(top - self.points[i+1][1])
+            left = min(self.points[i][0], self.points[i+1][0]) - self.width/2
+            top  = min(self.points[i][1], self.points[i+1][1]) - self.width/2
+            
+            width = abs(left - max(self.points[i][0], self.points[i+1][0])) + self.width
+            height = abs(top - max(self.points[i][1], self.points[i+1][1])) + self.width
             if width == 0:
                 width = self.width
             if height == 0:
                 height = self.width
-            self.subpaths.append( Rect(left, top, width, height ))
+            
+            self.subpaths.append( pg.Rect(left, top, width, height ))
+
+    def drawPath(self, surface):
+        for subpath in self.subpaths:
+            pg.draw.rect(surface, self.color, subpath)
+        
+        
+        
+        
+        
+    
