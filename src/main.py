@@ -12,7 +12,7 @@ def main():
     # Create surface of (width, height), and its window.
     main_surface = pygame.display.set_mode((surface_sz, surface_sz))
 
-    map_bw = pygame.image.load("map_bw.png")
+    map_bw = pygame.image.load("../res/map_bw.png")
     
     # Set up some data to describe a small rectangle and its color
     grid = [[None for x in range(10)] for y in range(10)]
