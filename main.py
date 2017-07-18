@@ -6,6 +6,7 @@ from src.map.Path import Path
 
 framerate = 60
 path_path = "res/path_points.txt"
+tower_path = "res/tower.png"
 background_image_path = "res/background.png"
 
 if __name__ == "__main__":
@@ -15,7 +16,7 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     
     path = Path(path_path)
-    twr = Tower(10,10)
+    twr = Tower(10,10,tower_path)
     
 
     while True:
@@ -28,8 +29,11 @@ if __name__ == "__main__":
             if ev.key == pg.K_q:
                 break
         
+        
         main_surface.blit(background_image,(0,0))
         path.drawPath(main_surface)
+        twr.draw(main_surface,path.subpaths)
+
         pg.display.flip()
 
     pg.quit()
