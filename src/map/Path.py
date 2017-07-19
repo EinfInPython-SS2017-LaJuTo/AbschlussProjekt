@@ -30,7 +30,7 @@ class Path:
             
             self.subpaths.append( pg.Rect(left, top, width, height ))
 
-    def drawPath(self, surface):
+    def draw(self, surface):
         for subpath in self.subpaths:
             pg.draw.rect(surface, self.color, subpath)
         

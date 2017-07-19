@@ -2,12 +2,12 @@
 
 import pygame as pg
 from tower.Tower import Tower
-from map.Path import Path
+from map.Map import Map
 
 framerate = 60
-path_path = "../res/path_points.txt"
 tower_path = "../res/tower.png"
 background_image_path = "../res/background.png"
+path_path = "../res/path_points.txt"
 
 if __name__ == "__main__":
     pg.init()
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     main_surface = pg.display.set_mode((background_image.get_width(),background_image.get_height()))
     clock = pg.time.Clock()
     
-    path = Path(path_path)
+    gamemap = Map(path_path)
     twr = Tower(10,10,tower_path)
     
 
@@ -23,14 +23,14 @@ if __name__ == "__main__":
         deltatime = clock.tick(framerate)
         
         for e in pg.event.get():
-            print(e)
+            #print(e)
             if e.type == pg.QUIT:
                 pg.quit()
             elif e.type == pg.KEYDOWN:
                 if e.key == pg.K_q:
                     pg.quit()
             elif e.type == pg.MOUSEBUTTONDOWN:
-                twr.active = True
+                twr.place_down()
                 
                 
         # all the updating
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         
         # all the drawing
         main_surface.blit(background_image,(0,0))
-        path.drawPath(main_surface)
-        twr.draw(main_surface,path.subpaths)
+        gamemap.draw(main_surface)
+        twr.draw(main_surface,gamemap.getPaths())
 
         pg.display.flip()
