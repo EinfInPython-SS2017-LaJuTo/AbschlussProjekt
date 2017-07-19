@@ -3,6 +3,7 @@
 import pygame as pg
 from tower.Tower import Tower
 from map.Path import Path
+from gui.Button import Button
 
 framerate = 60
 path_path = "../res/path_points.txt"
@@ -17,13 +18,13 @@ if __name__ == "__main__":
     
     path = Path(path_path)
     twr = Tower(10,10,tower_path)
+    btn = Button(0,0,200,100)
     
 
     while True:
         deltatime = clock.tick(framerate)
         
         for e in pg.event.get():
-            print(e)
             if e.type == pg.QUIT:
                 pg.quit()
             elif e.type == pg.KEYDOWN:
@@ -40,5 +41,7 @@ if __name__ == "__main__":
         main_surface.blit(background_image,(0,0))
         path.drawPath(main_surface)
         twr.draw(main_surface,path.subpaths)
+        btn.draw(main_surface)
+
 
         pg.display.flip()
