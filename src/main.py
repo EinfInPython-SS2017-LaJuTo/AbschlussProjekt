@@ -22,14 +22,14 @@ if __name__ == "__main__":
     while True:
         deltatime = clock.tick(framerate)
         
-        ev = pg.event.poll()
-        if ev.type == pg.QUIT:
-            break
-        elif ev.type == pg.KEYDOWN:
-            if ev.key == pg.K_q:
-                break
-        elif ev.type == pg.MOUSEBUTTONUP:
-            if not twr.active:
+        for e in pg.event.get():
+            print(e)
+            if e.type == pg.QUIT:
+                pg.quit()
+            elif e.type == pg.KEYDOWN:
+                if e.key == pg.K_q:
+                    pg.quit()
+            elif e.type == pg.MOUSEBUTTONDOWN:
                 twr.active = True
                 
                 
@@ -42,5 +42,3 @@ if __name__ == "__main__":
         twr.draw(main_surface,path.subpaths)
 
         pg.display.flip()
-
-    pg.quit()
