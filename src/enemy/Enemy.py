@@ -3,8 +3,7 @@ import pygame as pg
 class Enemy():
     # attributes:
         # pos (Position)
-        # width
-        # height
+        # radius
         # waypoint (the waypoint, it's currently heading for)
         # vel
         # acc (for smooth turns around corners) NOT YET IMPLEMENTED
@@ -37,7 +36,7 @@ class Enemy():
     def moveBy(self, direction, amount):
         self.pos = self.add(self.pos, self.scaldiv(direction,self.norm( direction )/amount) )
         
-        
+    ''' WIRD DURCH ORDENTLICHE VEKTOR-KLASSE ERSETZT'''    
     def add(self, tuple1, tuple2):
         return (tuple1[0]+tuple2[0], tuple1[1]+tuple2[1])
     def subtract(self, tuple1, tuple2):
