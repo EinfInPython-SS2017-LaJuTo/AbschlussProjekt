@@ -1,4 +1,5 @@
 import pygame as pg
+from tools.Vector import Vector
 
 class Path:
     points = []
@@ -14,7 +15,7 @@ class Path:
         file = open(file)
         for line in file:
             coords = line.strip().split(",")
-            self.points.append( (int(coords[0]),int(coords[1])) )
+            self.points.append( Vector(coords[0],coords[1]).asInt() )
     
     def assignSubpaths(self):
         for i in range(len(self.points)-1):
