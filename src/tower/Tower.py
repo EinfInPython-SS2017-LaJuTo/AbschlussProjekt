@@ -9,6 +9,7 @@ class Tower(Rect):
         self.img = pg.transform.scale(self.img, self.size)
         
         self.active = False
+        self.onPath = False
         
     def isOnPath(self,path):
         if self.collidelist(path) != -1:
@@ -16,11 +17,17 @@ class Tower(Rect):
         else:
             return False
     
+    def place_down(self):
+        if (not self.active) and (not self.onPath):
+            self.active = True
+            
     def update(self):
+        print(self.onPath)
         if not self.active:
             self.center = pg.mouse.get_pos()
         elif self.active:
             pass
+    
     
     def draw(self,surface,path): 
         surface.blit(self.img, self.topleft)
