@@ -8,14 +8,21 @@ class Tower(Rect):
         self.img = pg.image.load(img_path)
         self.img = pg.transform.scale(self.img, self.size)
         
+        self.active = False
+        
     def isOnPath(self,path):
         if self.collidelist(path) != -1:
             return True
         else:
             return False
     
+    def update(self):
+        if not self.active:
+            self.center = pg.mouse.get_pos()
+        elif self.active:
+            pass
+    
     def draw(self,surface,path): 
-        self.center = pg.mouse.get_pos()
         surface.blit(self.img, self.topleft)
         
         if self.isOnPath(path):
@@ -26,4 +33,3 @@ class Tower(Rect):
             pg.draw.circle(aSurf,(255,0,0,250), (radius,radius), radius, 3)
             surface.blit(aSurf,self.topleft)
             
-        

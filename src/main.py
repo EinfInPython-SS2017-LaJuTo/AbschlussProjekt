@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 import pygame as pg
-from src.tower.Tower import Tower
-from src.map.Path import Path
+from tower.Tower import Tower
+from map.Path import Path
 
 framerate = 60
-path_path = "res/path_points.txt"
-tower_path = "res/tower.png"
-background_image_path = "res/background.png"
+path_path = "../res/path_points.txt"
+tower_path = "../res/tower.png"
+background_image_path = "../res/background.png"
 
 if __name__ == "__main__":
     pg.init()
@@ -28,8 +28,15 @@ if __name__ == "__main__":
         elif ev.type == pg.KEYDOWN:
             if ev.key == pg.K_q:
                 break
+        elif ev.type == pg.MOUSEBUTTONUP:
+            if not twr.active:
+                twr.active = True
+                
+                
+        # all the updating
+        twr.update()
         
-        
+        # all the drawing
         main_surface.blit(background_image,(0,0))
         path.drawPath(main_surface)
         twr.draw(main_surface,path.subpaths)
