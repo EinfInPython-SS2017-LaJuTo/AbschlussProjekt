@@ -8,19 +8,21 @@ from map.Map import Map
 
 framerate = 60
 tower_path = "../res/tower.png"
-background_image_path = "../res/background.png"
+grass_path = "../res/grass.png"
 path_path = "../res/path_points.txt"
+enemy_path = "../res/enemy.png"
+
 
 if __name__ == "__main__":
     pg.init()
-    background_image = pg.image.load(background_image_path)
-    main_surface = pg.display.set_mode((background_image.get_width(),background_image.get_height()))
+    window_size = (800,600)
+    main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()
     
-    gamemap = Map(path_path)
+    gamemap = Map(grass_path,path_path)
     gamemap.size = main_surface.get_size()
     gamemap.add_tower(10,10,tower_path)
-    gamemap.add_enemy()
+    gamemap.add_enemy(enemy_path)
     
     while True:
         deltatime = clock.tick(framerate)
@@ -33,13 +35,12 @@ if __name__ == "__main__":
                     sys.exit()
             elif e.type == pg.MOUSEBUTTONDOWN:
                 gamemap.towers[-1].place_down()
-                gamemap.add_enemy()
+                gamemap.add_enemy(enemy_path)
                 
         # all the updating
         gamemap.update()
         
         # all the drawing
-        main_surface.blit(background_image,(0,0))
         gamemap.draw(main_surface)
 
         pg.display.flip()

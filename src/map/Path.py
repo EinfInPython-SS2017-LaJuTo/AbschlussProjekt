@@ -4,7 +4,7 @@ from tools.Vector import Vector
 class Path:
     points = []
     subpaths = []
-    width = 20
+    width = 40
     color = (200,200,100)
     
     def __init__(self,file):

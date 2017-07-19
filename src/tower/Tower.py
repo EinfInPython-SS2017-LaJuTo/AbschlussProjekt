@@ -6,21 +6,27 @@ class Tower:
     # attributes:
         # pos
         # radius
-        # range
         # img
         # active
         # onPath
+        # edge      (points that make up hitbox)
+        
+        # reload_time
+        # shot_ready 
+        # range
         
     def __init__(self,x,y,img_path):
         self.pos = Vector(x,y)
         self.radius = 25
-        self.range  = 50
         self.img = pg.image.load(img_path)
         self.img = pg.transform.scale(self.img, (self.radius*2,)*2)
-        
         self.active = False
         self.onPath = False
         self.edge = self.setEdgePoints()
+        
+        self.range  = 150
+        self.reload_time = 10
+        self.shot_ready = 0
         
     def setEdgePoints(self):
         l = list( self.pos+(Vector(self.radius-4,0).rotate(a)) for a in range(0,360,int(360/8)))
@@ -55,6 +61,8 @@ class Tower:
             self.pos = Vector(pg.mouse.get_pos()[0],pg.mouse.get_pos()[1])
         elif self.active:
             pass
+        if self.shot_ready > 0:
+            self.shot_ready -= 1
     
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
@@ -71,7 +79,7 @@ class Tower:
             surface.blit(aSurf,drawCenter)
             
     def aim(self,gamemap):
-        if self.active:
+        if self.active and self.shot_ready==0:
             for enemy in gamemap.enemies:
                 if (enemy.pos - self.pos).norm() < self.range:
                     self.shoot(gamemap,enemy)
@@ -79,4 +87,5 @@ class Tower:
             
     def shoot(self,gamemap,target):
         gamemap.add_bullet(self.pos,target)
+        self.shot_ready = self.reload_time
         
