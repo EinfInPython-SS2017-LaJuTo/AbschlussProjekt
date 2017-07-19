@@ -18,8 +18,9 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     
     gamemap = Map(path_path)
-    gamemap.add_tower(10,10,tower_path)
-
+    #gamemap.add_tower(10,10,tower_path)
+    gamemap.add_enemy()
+    
     while True:
         deltatime = clock.tick(framerate)
         
@@ -30,8 +31,8 @@ if __name__ == "__main__":
                 if e.key == pg.K_q:
                     sys.exit()
             elif e.type == pg.MOUSEBUTTONDOWN:
-                gamemap.towers[-1].place_down()
-                
+                #gamemap.towers[-1].place_down()
+                gamemap.add_enemy()
                 
         # all the updating
         gamemap.update()

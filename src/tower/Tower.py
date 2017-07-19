@@ -1,7 +1,6 @@
-from pygame import Rect
 import pygame as pg
 
-class Tower(Rect):
+class Tower(pg.Rect):
     
     def __init__(self,x,y,img_path):
         super().__init__(x, y, 50, 50)
