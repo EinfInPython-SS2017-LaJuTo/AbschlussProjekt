@@ -2,12 +2,8 @@
 
 import pygame as pg
 from tower.Tower import Tower
-<<<<<<< HEAD
-from map.Path import Path
 from gui.Button import Button
-=======
 from map.Map import Map
->>>>>>> Lars
 
 framerate = 60
 tower_path = "../res/tower.png"
