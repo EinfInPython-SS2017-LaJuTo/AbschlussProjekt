@@ -21,18 +21,19 @@ class Tower(Rect):
         if (not self.active) and (not self.onPath):
             self.active = True
             
-    def update(self):
-        print(self.onPath)
+    def update(self,path):
+        #print(self.onPath)
+        self.onPath = self.isOnPath(path)
         if not self.active:
             self.center = pg.mouse.get_pos()
         elif self.active:
             pass
     
     
-    def draw(self,surface,path): 
+    def draw(self,surface): 
         surface.blit(self.img, self.topleft)
         
-        if self.isOnPath(path):
+        if self.onPath:
             aSurf = pg.Surface(self.size, pg.SRCALPHA)
             aSurf.convert_alpha()
             radius = int(self.width/2)

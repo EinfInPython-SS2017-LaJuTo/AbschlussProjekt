@@ -17,7 +17,7 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     
     gamemap = Map(path_path)
-    twr = Tower(10,10,tower_path)
+    gamemap.create_tower(10,10,tower_path)
 
     while True:
         deltatime = clock.tick(framerate)
@@ -29,16 +29,14 @@ if __name__ == "__main__":
                 if e.key == pg.K_q:
                     pg.quit()
             elif e.type == pg.MOUSEBUTTONDOWN:
-                twr.place_down()
+                gamemap.towers[-1].place_down()
                 
                 
         # all the updating
-        twr.update()
+        gamemap.update()
         
         # all the drawing
         main_surface.blit(background_image,(0,0))
-
         gamemap.draw(main_surface)
-        twr.draw(main_surface,gamemap.getPaths())
 
         pg.display.flip()
