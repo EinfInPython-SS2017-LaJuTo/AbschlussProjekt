@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import pygame as pg
+import sys
 from tower.Tower import Tower
 from gui.Button import Button
 from map.Map import Map
@@ -17,17 +18,17 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     
     gamemap = Map(path_path)
-    gamemap.create_tower(10,10,tower_path)
+    gamemap.add_tower(10,10,tower_path)
 
     while True:
         deltatime = clock.tick(framerate)
         
         for e in pg.event.get():
             if e.type == pg.QUIT:
-                pg.quit()
+                sys.exit()
             elif e.type == pg.KEYDOWN:
                 if e.key == pg.K_q:
-                    pg.quit()
+                    sys.exit()
             elif e.type == pg.MOUSEBUTTONDOWN:
                 gamemap.towers[-1].place_down()
                 
