@@ -47,4 +47,13 @@ if __name__ == "__main__":
         gamemap.draw(main_surface)
         #button.draw(main_surface)
         
+        
+#        # TEST
+#        test_img = pg.image.load(enemy_path)
+#        test_img = pg.transform.scale(test_img,(100,100))
+#        render_img = pg.transform.rotate(test_img,pg.mouse.get_pos()[0])
+#        main_surface.blit(render_img,(150,150))
+#        # TEST END
+        
+        
         pg.display.flip()

@@ -1,15 +1,19 @@
 import pygame as pg
 from tools.Vector import Vector
-import math
 
 class Tower:
     # attributes:
         # pos
         # radius
-        # img
+        
+        # image
+        
         # active
         # onPath
         # edge      (points that make up hitbox)
+        
+        # target
+        # angle
         
         # reload_time
         # shot_ready 
@@ -18,11 +22,16 @@ class Tower:
     def __init__(self,x,y,img_path):
         self.pos = Vector(x,y)
         self.radius = 25
-        self.img = pg.image.load(img_path)
-        self.img = pg.transform.scale(self.img, (self.radius*2,)*2)
+        
+        self.image = pg.image.load(img_path)
+        self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
+
         self.active = False
         self.onPath = False
         self.edge = self.setEdgePoints()
+        
+        self.target = None
+        self.angle = 0
         
         self.range  = 150
         self.reload_time = 10
@@ -31,18 +40,7 @@ class Tower:
     def setEdgePoints(self):
         l = list( self.pos+(Vector(self.radius-4,0).rotate(a)) for a in range(0,360,int(360/8)))
         return l
-        
-        ''' Wenn du eine bessere Idee hierfür hast, nur zu! :) 
-        self.edge[0] = (self.pos[0],self.pos[1]-self.radius)  # top
-        self.edge[1] = (self.pos[0],self.pos[1]+self.radius)  # bottom
-        self.edge[2] = (self.pos[0]-self.radius,self.pos[1])  # left
-        self.edge[3] = (self.pos[0]+self.radius,self.pos[1])  # right
-        self.edge[4] = (self.pos[0]-self.radius/2,self.pos[1]-self.radius/2)  # topleft
-        self.edge[5] = (self.pos[0]+self.radius/2,self.pos[1]-self.radius/2)  # topright
-        self.edge[6] = (self.pos[0]-self.radius/2,self.pos[1]+self.radius/2)  # bottomleft
-        self.edge[7] = (self.pos[0]+self.radius/2,self.pos[1]+self.radius/2)  # bottomright
-        self.edge[8] = self.pos
-        '''
+    
     def isOnPath(self,path):
         for subpath in path:
             for point in self.edge:
@@ -66,26 +64,32 @@ class Tower:
     
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
-        drawCenter = self.pos-rad2
-        surface.blit(self.img, drawCenter)
-        #for point in self.edge:
-        #    pg.draw.circle(surface, (0,0,0), point.asInt() , 2)
+        render_image = pg.transform.rotate(self.image,-self.angle)
+        draw_center = Vector(*render_image.get_size())/2
+        surface.blit(render_image, draw_center)
+        pg.draw.circle(surface, (255,0,0), self.pos , 2)
+#       "hitbox"
+#       for point in self.edge:
+#           pg.draw.circle(surface, (0,0,0), point.asInt() , 2)
+        
         if self.onPath:
             aSurf = pg.Surface((self.radius*2,)*2, pg.SRCALPHA)
             aSurf.convert_alpha()
             radius = int(self.radius)
             pg.draw.circle(aSurf,(255,0,0,50), rad2, radius)
             pg.draw.circle(aSurf,(255,0,0,250), rad2, radius, 3)
-            surface.blit(aSurf,drawCenter)
+            surface.blit(aSurf,draw_center)
             
     def aim(self,gamemap):
         if self.active and self.shot_ready==0:
             for enemy in gamemap.enemies:
                 if (enemy.pos - self.pos).norm() < self.range:
-                    self.shoot(gamemap,enemy)
+                    self.target = enemy # aquire target
+                    self.angle = (self.pos-enemy.pos).angle("deg") # "aim at enemy"
+                    self.shoot(gamemap) # fire!!
                     break
             
-    def shoot(self,gamemap,target):
-        gamemap.add_bullet(self.pos,target)
+    def shoot(self,gamemap):
+        gamemap.add_bullet(self.pos,self.target)
         self.shot_ready = self.reload_time
         

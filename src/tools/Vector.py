@@ -29,8 +29,9 @@ import math
 class Vector(object):
     def __init__(self, *args):
         """ Create a vector, example: v = Vector(1,2) """
+
         if len(args)==0: self.values = (0,0)
-        else: self.values = args
+        else:            self.values = args
         
     def norm(self):
         """ Returns the norm (length, magnitude) of the vector """
@@ -114,7 +115,7 @@ class Vector(object):
         """ Called if 4*self for instance """
         return self.__mul__(other)
             
-    def __div__(self, other):
+    def __truediv__(self, other):
         if type(other) == type(1) or type(other) == type(1.0):
             divided = tuple( a / other for a in self )
             return Vector(*divided)
