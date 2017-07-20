@@ -1,28 +1,13 @@
 
 import pygame as pg
 
-class Button(pg.Rect):
-    
-    bg_color = None
-    line_color = None
-    line_width = None
-    
-    text = None
-    text_color = None
-    text_size = None
+from gui.Label import Label
 
+class Button(Label):
+    
     pressed = False
     
-    def __init__(self, left, top, width, height, text="", text_size=None, text_color=pg.Color(0,0,0), bg_color=pg.Color(200,200,200), line_color=pg.Color(0,0,0), line_width=1):
-        super().__init__(left, top, width, height)
-        self.bg_color = bg_color
-        self.line_color = line_color
-        self.line_width = line_width
-        self.text = text
-        self.text_color = text_color
-        if text_size == None:
-            text_size = height//2
-        self.text_size = text_size
+    # __init__ is inherited from Label
 
     def check_press(self,x,y):
         if self.collidepoint(x,y):
