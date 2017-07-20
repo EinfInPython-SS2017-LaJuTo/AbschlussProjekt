@@ -24,6 +24,8 @@ if __name__ == "__main__":
     gamemap.add_tower(10,10,tower_path)
     gamemap.add_enemy(enemy_path)
     
+    #button = Button(200,200,100,70)
+    
     while True:
         deltatime = clock.tick(framerate)
         
@@ -34,6 +36,7 @@ if __name__ == "__main__":
                 if e.key == pg.K_q:
                     sys.exit()
             elif e.type == pg.MOUSEBUTTONDOWN:
+                #button.check_press(pg.mouse.get_pos())
                 gamemap.towers[-1].place_down()
                 gamemap.add_enemy(enemy_path)
                 
@@ -42,5 +45,6 @@ if __name__ == "__main__":
         
         # all the drawing
         gamemap.draw(main_surface)
-
+        #button.draw(main_surface)
+        
         pg.display.flip()
