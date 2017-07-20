@@ -5,6 +5,7 @@ import random
 class Enemy():
     # attributes:
         # pos (Position)
+        # angle 
         # radius
         # image
         # vel
@@ -22,21 +23,29 @@ class Enemy():
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2)
         self.vel = 1
         self.waypoint = Vector(subpath.end[0],subpath.end[1])
+        self.angle = (self.waypoint-self.pos).angle("deg")
         self.varyPath(20)
         self.current = 0 # the subpath, it's currently on
         
-        self.health = 100
+        self.health_start = 100
+        self.health = self.health_start
         
     def update(self,gamemap):
         if self.health <= 0:
             gamemap.del_enemy(self)
         self.followPath(gamemap)
+        self.angle = (self.waypoint-self.pos).angle("deg")
     
     def draw(self,surface):
+        # render enemy
         rad2 = Vector(self.radius,self.radius)
         drawCenter = self.pos-rad2
-        surface.blit(self.image, drawCenter)
-        #pg.draw.circle( surface, (255,0,0), self.pos.asInt(), self.radius )
+        self.render_image = pg.transform.rotate(self.image,-self.angle)
+        surface.blit(self.render_image, drawCenter)
+        
+        # render healthbar
+        if self.health < self.health_start:
+            pg.draw.rect(surface, (255,0,0), (self.pos-rad2,(self.radius*2/self.health_start*self.health,5)) )
         
     def hit(self,hitpoints):
         self.health -= hitpoints

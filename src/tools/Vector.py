@@ -147,3 +147,11 @@ class Vector(object):
         inted = tuple(int(a) for a in self.values)
         return Vector(*inted)
     
+    def angle(self,arg="rad"):
+        """ straight up is 0, then clockwise """
+        e = Vector(0,1)
+        a = math.acos( (self*e) / (self.norm()*e.norm()) )
+        if self[0]>0: a*=-1
+        if arg == "rad": return a
+        elif arg == "deg": return a * 180/math.pi
+    
