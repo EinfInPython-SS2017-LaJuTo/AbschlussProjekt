@@ -29,9 +29,8 @@ import math
 class Vector(object):
     def __init__(self, *args):
         """ Create a vector, example: v = Vector(1,2) """
-
         if len(args)==0: self.values = (0,0)
-        else:            self.values = args
+        else: self.values = args
         
     def norm(self):
         """ Returns the norm (length, magnitude) of the vector """

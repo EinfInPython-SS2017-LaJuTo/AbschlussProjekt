@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     gamemap = Map(grass_path,path_path)
     gamemap.size = main_surface.get_size()
-    gamemap.add_tower(10,10,tower_path)
+    gamemap.add_tower(tower_path)
     gamemap.add_enemy(enemy_path)
     
     #button = Button(200,200,100,70)

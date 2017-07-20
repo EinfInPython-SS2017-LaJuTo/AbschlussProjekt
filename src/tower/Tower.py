@@ -19,8 +19,8 @@ class Tower:
         # shot_ready 
         # range
         
-    def __init__(self,x,y,img_path):
-        self.pos = Vector(x,y)
+    def __init__(self,img_path):
+        self.pos = Vector(0,0)
         self.radius = 25
         
         self.image = pg.image.load(img_path)
@@ -65,9 +65,9 @@ class Tower:
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
         render_image = pg.transform.rotate(self.image,-self.angle)
-        draw_center = Vector(*render_image.get_size())/2
+        draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
-        pg.draw.circle(surface, (255,0,0), self.pos , 2)
+        
 #       "hitbox"
 #       for point in self.edge:
 #           pg.draw.circle(surface, (0,0,0), point.asInt() , 2)

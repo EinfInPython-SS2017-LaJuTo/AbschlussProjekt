@@ -39,10 +39,10 @@ class Enemy():
     def draw(self,surface):
         # render enemy
         rad2 = Vector(self.radius,self.radius)
-        drawCenter = self.pos-rad2
         render_image = pg.transform.rotate(self.image,-self.angle)
-        surface.blit(render_image, drawCenter)
-        pg.draw.circle(surface, (255,0,0), self.pos.asInt() , 2)
+        draw_center = self.pos - Vector( *render_image.get_size() )/2
+        surface.blit(render_image, draw_center)
+        
         # render healthbar
         if self.health < self.health_start:
             pg.draw.rect(surface, (255,0,0), (self.pos-rad2,(self.radius*2/self.health_start*self.health,5)) )

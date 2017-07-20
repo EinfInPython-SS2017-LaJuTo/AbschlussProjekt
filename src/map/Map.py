@@ -51,8 +51,8 @@ class Map():
             enemy.draw(surface)
         
         
-    def add_tower(self,x,y,img_path):
-        self.towers.append( Tower(x,y,img_path) )
+    def add_tower(self,img_path):
+        self.towers.append( Tower(img_path) )
 
     def del_tower(self,tower):
         pass
