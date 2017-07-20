@@ -10,8 +10,7 @@ class Button(Label):
     # __init__ is inherited from Label
 
     def check_press(self,pos):
-        x,y = pos[0],pos[1]
-        if self.collidepoint(x,y):
+        if self.collidepoint(*pos):
             self.pressed = True
 
     def release(self):
