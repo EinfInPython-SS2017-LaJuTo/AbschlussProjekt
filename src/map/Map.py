@@ -23,4 +23,3 @@ class Map():
                 surface.blit(self.bg_image, (x*self.tilesize,y*self.tilesize))
         # path
         self.path.draw(surface)        
-    

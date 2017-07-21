@@ -15,7 +15,7 @@ class Gameengine():
             if tower.alive == True:
                 tower.update(dt)
                 if tower.shooting:
-                    self.add_bullet(tower.pos, tower.target)
+                    self.add_bullet(tower.pos-tower.nozzle, tower.target)
             else:
                 del self.towers[self.towers.index(tower)]
                 

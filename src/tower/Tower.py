@@ -4,6 +4,8 @@ from lib.Vector import Vector
 class Tower:
     # attributes:
         # pos
+        # nozzle_original
+        # nossle    (point of exit for the bullets) (relative to pos)
         # radius
         
         # image
@@ -28,6 +30,8 @@ class Tower:
     def __init__(self,img_path, enemies, subpaths):
         self.pos = Vector(0,0)
         self.radius = 25
+        self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
+        self.nozzle = self.nozzle_original
         
         self.image = pg.image.load(img_path)
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
@@ -79,6 +83,7 @@ class Tower:
                 if (enemy.pos - self.pos).norm() < self.range:
                     self.target = enemy # aquire target
                     self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
+                    self.nozzle = self.nozzle_original.rotate(self.angle)
                     if self.shot_dt >= self.shot_frequency*dt:      # "may I soot?"
                         self.shooting = True                        # fire!!
                         self.shot_dt = 0
