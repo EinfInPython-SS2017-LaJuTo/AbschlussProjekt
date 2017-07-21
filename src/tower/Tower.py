@@ -93,6 +93,13 @@ class Tower:
         
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
+        
+        if not self.active:
+            surf = pg.Surface((self.range*2,)*2, pg.SRCALPHA)
+            pg.draw.circle(surf, (0,0,255,50), (self.range,)*2, self.range)
+            surface.blit(surf, self.pos-(self.range,)*2)
+            pg.draw.circle(surface, (0,0,255), self.pos, self.range,3)
+        
         render_image = pg.transform.rotate(self.image,-self.angle)
         draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
