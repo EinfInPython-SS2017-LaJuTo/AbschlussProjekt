@@ -1,5 +1,5 @@
 import pygame as pg
-from tools.Vector import Vector
+from lib.Vector import Vector
 
 class Bullet:
     # attributes:

@@ -1,5 +1,5 @@
 import pygame as pg
-from tools.Vector import Vector
+from lib.Vector import Vector
 
 class Path:
     points = []
@@ -46,8 +46,4 @@ class Path:
             super().__init__(x,y,width,height)
             self.start = start
             self.end = end
-        
-        
-        
-        
-    
+         

@@ -1,5 +1,5 @@
 import pygame as pg
-from tools.Vector import Vector
+from lib.Vector import Vector
 import random
 
 class Enemy():
