@@ -4,36 +4,37 @@ import random
 
 class Enemy():
     # attributes:
-        # pos (Position)
+        # pos      (Position)
         # angle 
-        # radius
+        # radius   (Hitbox)
         # image
-        # vel
         # waypoint (the waypoint, it's currently heading for)
-        # current
-        # acc (for smooth turns around corners)               NOT YET IMPLEMENTED
-              
+        # current  (the subpath, it's currently on)
+             
+        # alive
         # health
+        # speed
         
-    def __init__(self,image_path,subpath):
+    def __init__(self,image_path,subpath, speed):
         self.pos = Vector(subpath.start[0],subpath.start[1])
         self.pos = self.pos + (random.randint(-10,10), random.randint(-10,10))
         self.radius  = 10 
         self.image = pg.image.load(image_path)
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2)
-        self.vel = 1
         self.waypoint = Vector(subpath.end[0],subpath.end[1])
         self.angle = (self.waypoint-self.pos).angle("deg")
         self.varyPath(20)
-        self.current = 0 # the subpath, it's currently on
+        self.current = 0 
         
+        self.alive = True
         self.health_start = 100
         self.health = self.health_start
+        self.speed = speed
         
-    def update(self,gamemap):
+    def update(self,subpaths,dt):
         if self.health <= 0:
-            gamemap.del_enemy(self)
-        self.followPath(gamemap)
+            self.alive = False
+        self.followPath(subpaths,dt)
         self.angle = (self.waypoint-self.pos).angle("deg")
     
     def draw(self,surface):
@@ -45,26 +46,30 @@ class Enemy():
         
         # render healthbar
         if self.health < self.health_start:
-            pg.draw.rect(surface, (255,0,0), (self.pos-rad2,(self.radius*2/self.health_start*self.health,5)) )
+            self.draw_bar(surface, self.pos-rad2-Vector(0,5), (self.radius*2, 5), (0,0,0))
+            self.draw_bar(surface, self.pos-rad2-Vector(0,5), (self.radius*2/self.health_start*self.health, 5), (255,0,0))
         
+    def draw_bar(self,surface, topleft, size, color):
+        pg.draw.rect(surface, color, (topleft,size) )
+    
     def hit(self,hitpoints):
         self.health -= hitpoints
         
-    def followPath(self,gamemap):
-        path = gamemap.getPaths()
+    def followPath(self,subpaths,dt):
         vector_to_waypoint = self.waypoint - self.pos
-        if vector_to_waypoint.norm() > 1: # go to current waypoint
-            self.pos = self.pos + vector_to_waypoint.normalize() * self.vel
-            
-        elif self.current < len(path)-1:
+        rand_offset = subpaths[0].width # [0] doesn't matter, just need an element of subpaths
+        
+        if vector_to_waypoint.norm() > 1:                                   # if not yet at current waypoint
+            self.pos = self.pos + vector_to_waypoint.normalize() * self.speed*dt # go to current waypoint
+        elif self.current < len(subpaths)-1:
             self.current += 1
-            self.waypoint = path[self.current].end # get next waypoint
-            self.varyPath(gamemap.path.width)
-        elif self.current == len(path)-1:
+            self.waypoint = subpaths[self.current].end # get next waypoint
+            self.varyPath(rand_offset)
+        elif self.current == len(subpaths)-1:
             self.current = 0
-            self.waypoint = path[self.current].end
-            self.pos = path[self.current].start
-            self.varyPath(gamemap.path.width)
+            self.waypoint = subpaths[self.current].end
+            self.pos = subpaths[self.current].start
+            self.varyPath(rand_offset)
             
     def varyPath(self,amount):
         self.waypoint = self.waypoint + (random.randint(-amount/4,amount/4),random.randint(-amount/4,amount/4))

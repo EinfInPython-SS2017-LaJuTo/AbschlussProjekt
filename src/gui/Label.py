@@ -2,16 +2,15 @@
 import pygame as pg
 
 class Label(pg.Rect):
+    # attributes:
+        # bg_color
+        # line_color
+        # line_width
+        # text
+        # text_color
+        # text_size
+        # {pg.Rect}
     
-    bg_color = None
-    line_color = None
-    line_width = None
-    
-    text = None
-    text_color = None
-    text_size = None
-    text_pos = None
-
     def __init__(self, left, top, width, height, text="", text_pos=None, text_size=None, text_color=pg.Color(0,0,0), bg_color=pg.Color(200,200,200), line_color=pg.Color(0,0,0), line_width=1):
         super().__init__(left, top, width, height)
         self.bg_color = bg_color

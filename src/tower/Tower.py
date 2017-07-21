@@ -4,10 +4,13 @@ from lib.Vector import Vector
 class Tower:
     # attributes:
         # pos
+        # nozzle_original
+        # nossle    (point of exit for the bullets) (relative to pos)
         # radius
         
         # image
         
+        # alive
         # active
         # onPath
         # edge      (points that make up hitbox)
@@ -15,17 +18,25 @@ class Tower:
         # target
         # angle
         
-        # reload_time
-        # shot_ready 
+        # shot_frequency
+        # shot_dt   (time since last shot)
+        # shooting
         # range
         
-    def __init__(self,img_path):
+    # references:
+        # enemies       (from gamemap)
+        # subpaths      (from gamemap)
+    
+    def __init__(self,img_path, enemies, subpaths):
         self.pos = Vector(0,0)
         self.radius = 25
+        self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
+        self.nozzle = self.nozzle_original
         
         self.image = pg.image.load(img_path)
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
 
+        self.alive = True
         self.active = False
         self.onPath = False
         self.edge = self.setEdgePoints()
@@ -34,8 +45,13 @@ class Tower:
         self.angle = 0
         
         self.range  = 150
-        self.reload_time = 10
-        self.shot_ready = 0
+        self.shot_frequency = 10
+        self.shot_dt = 0
+        self.shooting = False
+        
+        
+        self.enemies = enemies
+        self.subpaths = subpaths
         
     def setEdgePoints(self):
         l = list( self.pos+(Vector(self.radius-4,0).rotate(a)) for a in range(0,360,int(360/8)))
@@ -52,16 +68,29 @@ class Tower:
         if (not self.active) and (not self.onPath):
             self.active = True
             
-    def update(self,path):
-        self.onPath = self.isOnPath(path)
+    def update(self,dt):
+        self.onPath = self.isOnPath(self.subpaths)
         if not self.active:
             self.edge = self.setEdgePoints()
             self.pos = Vector(pg.mouse.get_pos()[0],pg.mouse.get_pos()[1])
-        elif self.active:
-            pass
-        if self.shot_ready > 0:
-            self.shot_ready -= 1
+        
+        self.aim(dt)
     
+    def aim(self,dt):
+        if self.active: # doesn't shoot, if not placed down
+            if self.shooting: self.shooting = False
+            for enemy in self.enemies:
+                if (enemy.pos - self.pos).norm() < self.range:
+                    self.target = enemy # aquire target
+                    self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
+                    self.nozzle = self.nozzle_original.rotate(self.angle)
+                    if self.shot_dt >= self.shot_frequency*dt:      # "may I soot?"
+                        self.shooting = True                        # fire!!
+                        self.shot_dt = 0
+                    else:
+                        self.shot_dt += dt                          # count time since last shot
+                    break
+        
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
         render_image = pg.transform.rotate(self.image,-self.angle)
@@ -80,16 +109,3 @@ class Tower:
             pg.draw.circle(aSurf,(255,0,0,250), rad2, radius, 3)
             surface.blit(aSurf,draw_center)
             
-    def aim(self,gamemap):
-        if self.active and self.shot_ready==0:
-            for enemy in gamemap.enemies:
-                if (enemy.pos - self.pos).norm() < self.range:
-                    self.target = enemy # aquire target
-                    self.angle = (self.pos-enemy.pos).angle("deg") # "aim at enemy"
-                    self.shoot(gamemap) # fire!!
-                    break
-            
-    def shoot(self,gamemap):
-        gamemap.add_bullet(self.pos,self.target)
-        self.shot_ready = self.reload_time
-        

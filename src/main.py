@@ -5,13 +5,13 @@ import sys
 from tower.Tower import Tower
 from gui.Button import Button
 from map.Map import Map
+from game.Gameengine import Gameengine
 
 framerate = 60
-tower_path = "../res/tower.png"
-grass_path = "../res/grass.png"
-path_path = "../res/path_points.txt"
-enemy_path = "../res/enemy.png"
-
+tower_path  = "../res/tower.png"
+grass_path  = "../res/grass.png"
+path_path   = "../res/path_points.txt"
+enemy_path  = "../res/enemy.png"
 
 if __name__ == "__main__":
     pg.init()
@@ -19,10 +19,9 @@ if __name__ == "__main__":
     main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()
     
-    gamemap = Map(grass_path,path_path)
-    gamemap.size = main_surface.get_size()
-    gamemap.add_tower(tower_path)
-    gamemap.add_enemy(enemy_path)
+    gameengine = Gameengine( Map(grass_path, path_path, main_surface.get_size()), )
+    gameengine.add_tower(tower_path)
+    gameengine.add_enemy(enemy_path)
     
     #button = Button(200,200,100,70)
     
@@ -37,14 +36,14 @@ if __name__ == "__main__":
                     sys.exit()
             elif e.type == pg.MOUSEBUTTONDOWN:
                 #button.check_press(pg.mouse.get_pos())
-                gamemap.towers[-1].place_down()
-                gamemap.add_enemy(enemy_path)
+                gameengine.towers[-1].place_down()
+                gameengine.add_enemy(enemy_path)
                 
         # all the updating
-        gamemap.update()
+        gameengine.update(deltatime)
         
         # all the drawing
-        gamemap.draw(main_surface)
+        gameengine.draw(main_surface)
         #button.draw(main_surface)
         
         
