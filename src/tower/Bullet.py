@@ -3,13 +3,20 @@ from lib.Vector import Vector
 
 class Bullet:
     # attributes:
+        # radius
+        # image
+        
         # pos
         # vel
         # target
         # hitpoints
         # alive
         
-    def __init__(self,pos,target):
+    def __init__(self,img_path,pos,target):
+        self.radius = 5
+        self.image = pg.image.load(img_path)
+        self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
+        
         self.pos = Vector(pos[0],pos[1])
         self.vel = 0.5
         self.target = target
@@ -30,5 +37,8 @@ class Bullet:
             self.alive = False
     
     def show(self,surface):
-        pg.draw.circle(surface, (255,255,255), self.pos.asInt(), 5)
+        rad2 = Vector(self.radius,self.radius)
+        draw_center = self.pos - rad2
+        surface.blit(self.image, draw_center)
+        #pg.draw.circle(surface, (255,255,255), self.pos.asInt(), 5)
     

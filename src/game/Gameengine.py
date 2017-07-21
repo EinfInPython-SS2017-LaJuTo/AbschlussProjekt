@@ -9,6 +9,7 @@ class Gameengine():
         self.towers = []
         self.enemies = []
         self.bullets = []
+        self.bullet_path = "../res/bullet.png"
         
     def update(self,dt): # dt := deltatime
         for tower in self.towers:
@@ -47,7 +48,7 @@ class Gameengine():
         del self.towers[ self.towers.index(tower) ]
     
     def add_bullet(self,pos,target):
-        self.bullets.append( Bullet(pos,target) )
+        self.bullets.append( Bullet(self.bullet_path,pos,target) )
     def del_bullet(self,bullet):
         del self.bullets[ self.bullets.index(bullet) ]
     
