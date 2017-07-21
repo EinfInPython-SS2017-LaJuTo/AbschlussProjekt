@@ -17,7 +17,7 @@ class Enemy():
         
     def __init__(self,image_path,subpath):
         self.pos = Vector(subpath.start[0],subpath.start[1])
-        self.pos = self.pos + (random.randint(-10,10),random.randint(-10,10))
+        self.pos = self.pos + (random.randint(-10,10), random.randint(-10,10))
         self.radius  = 10 
         self.image = pg.image.load(image_path)
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2)

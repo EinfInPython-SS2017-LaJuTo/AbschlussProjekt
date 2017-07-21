@@ -10,8 +10,9 @@ class Label(pg.Rect):
     text = None
     text_color = None
     text_size = None
+    text_pos = None
 
-    def __init__(self, left, top, width, height, text="", text_size=None, text_color=pg.Color(0,0,0), bg_color=pg.Color(200,200,200), line_color=pg.Color(0,0,0), line_width=1):
+    def __init__(self, left, top, width, height, text="", text_pos=None, text_size=None, text_color=pg.Color(0,0,0), bg_color=pg.Color(200,200,200), line_color=pg.Color(0,0,0), line_width=1):
         super().__init__(left, top, width, height)
         self.bg_color = bg_color
         self.line_color = line_color
@@ -21,14 +22,19 @@ class Label(pg.Rect):
         if text_size == None:
             text_size = height//2
         self.text_size = text_size
+        self.text_pos = text_pos
 
     def draw(self, surface):
         text_font,text_render = None, None
-        if self.text != "":
+        if self.text != "": # Only render the text if necessary
             text_font = pg.font.Font(None,self.text_size)
             text_render = text_font.render(self.text, True, self.text_color)
         
         surface.fill(self.bg_color, rect=self)
         pg.draw.rect(surface, self.line_color, self, self.line_width)
         if text_render != None:
-            surface.blit(text_render,text_render.get_rect(center=self.center))
+            if text_pos == None: # If text_pos = None, draw the text centered
+                surface.blit(text_render,text_render.get_rect(center=self.center))
+            else: # Otherwise at the given position
+                surface.blit(text_render, text_pos)
+                
