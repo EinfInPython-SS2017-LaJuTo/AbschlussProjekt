@@ -4,6 +4,9 @@ import pygame as pg
 from gui.Label import Label
 
 class Button(Label):
+    # attributes:
+        # pressed
+        # {Label}
     
     pressed = False
     
