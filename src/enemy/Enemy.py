@@ -46,8 +46,12 @@ class Enemy():
         
         # render healthbar
         if self.health < self.health_start:
-            pg.draw.rect(surface, (255,0,0), (self.pos-rad2,(self.radius*2/self.health_start*self.health,5)) )
+            self.draw_bar(surface, self.pos-rad2-Vector(0,5), (self.radius*2, 5), (0,0,0))
+            self.draw_bar(surface, self.pos-rad2-Vector(0,5), (self.radius*2/self.health_start*self.health, 5), (255,0,0))
         
+    def draw_bar(self,surface, topleft, size, color):
+        pg.draw.rect(surface, color, (topleft,size) )
+    
     def hit(self,hitpoints):
         self.health -= hitpoints
         
