@@ -23,6 +23,8 @@ if __name__ == "__main__":
     gameengine.add_tower(tower_path)
     gameengine.add_enemy(enemy_path)
     
+    gametime = 0
+    
     #button = Button(200,200,100,70)
     
     while True:
@@ -41,6 +43,12 @@ if __name__ == "__main__":
                 
         # all the updating
         gameengine.update(deltatime)
+        
+        gametime += deltatime/1000
+
+        if gametime > 1:
+            gameengine.add_enemy(enemy_path)
+            gametime = 0
         
         # all the drawing
         gameengine.draw(main_surface)
