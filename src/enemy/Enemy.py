@@ -15,11 +15,11 @@ class Enemy():
         # health
         # speed
         
-    def __init__(self,image_path,subpath, speed):
+    def __init__(self,image_path,subpath, speed, angle = 90):
         self.pos = Vector(subpath.start[0],subpath.start[1])
         self.pos = self.pos + (random.randint(-10,10), random.randint(-10,10))
         self.radius  = 10 
-        self.image = pg.image.load(image_path)
+        self.image = image_path
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2)
         self.waypoint = Vector(subpath.end[0],subpath.end[1])
         self.angle = (self.waypoint-self.pos).angle("deg")
@@ -35,7 +35,10 @@ class Enemy():
         if self.health <= 0:
             self.alive = False
         self.followPath(subpaths,dt)
-        self.angle = (self.waypoint-self.pos).angle("deg")
+        if (self.waypoint-self.pos) == 0:
+            pass
+        else:
+            self.angle = (self.waypoint-self.pos).angle("deg")
     
     def draw(self,surface):
         # render enemy

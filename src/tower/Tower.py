@@ -33,7 +33,7 @@ class Tower:
         self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
         self.nozzle = self.nozzle_original
         
-        self.image = pg.image.load(img_path)
+        self.image = img_path
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
 
         self.alive = True

@@ -13,7 +13,7 @@ class Map():
         self.size = size
         self.tilesize = 50
         self.path = Path(path_path)
-        self.bg_image = pg.image.load(image_path)
+        self.bg_image = image_path
         self.bg_image = pg.transform.scale(self.bg_image, (self.tilesize,)*2)
     
     def draw(self, surface):

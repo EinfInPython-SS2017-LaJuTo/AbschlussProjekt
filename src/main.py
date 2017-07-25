@@ -6,12 +6,12 @@ from tower.Tower import Tower
 from gui.Button import Button
 from map.Map import Map
 from game.Gameengine import Gameengine
+from imageloader import *
+# import level?
+# import wave?
 
 framerate = 60
-tower_path  = "../res/tower.png"
-grass_path  = "../res/grass.png"
-path_path   = "../res/path_points.txt"
-enemy_path  = "../res/enemy.png"
+path_path   = "../res/path_points.txt" # dann in map oder level je nachdem ...
 
 if __name__ == "__main__":
     pg.init()
