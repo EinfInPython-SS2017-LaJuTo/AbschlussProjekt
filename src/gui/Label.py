@@ -4,6 +4,7 @@ import pygame as pg
 class Label(pg.Rect):
     # attributes:
         # bg_color
+        # background
         # line_color
         # line_width
         # text
@@ -11,9 +12,10 @@ class Label(pg.Rect):
         # text_size
         # {pg.Rect}
     
-    def __init__(self, left, top, width, height, text="", text_pos=None, text_size=None, text_color=pg.Color(0,0,0), bg_color=pg.Color(200,200,200), line_color=pg.Color(0,0,0), line_width=1):
+    def __init__(self, left, top, width, height, text="", text_pos=None, text_size=None, text_color=pg.Color(0,0,0), bg_color=pg.Color(200,200,200), background=None, line_color=pg.Color(0,0,0), line_width=1):
         super().__init__(left, top, width, height)
         self.bg_color = bg_color
+        self.background = background
         self.line_color = line_color
         self.line_width = line_width
         self.text = text
@@ -21,10 +23,15 @@ class Label(pg.Rect):
         self.text_size = text_size
         self.text_pos = text_pos
 
-    def draw(self, surface): 
+    def draw(self, surface, delta_x=0, delta_y=0):
         surface.fill(self.bg_color, rect=self)
         pg.draw.rect(surface, self.line_color, self, self.line_width)
-        self._draw_text(surface)
+        if self.background != None:
+            if self.background.get_width() > self.width or self.background.get_height() > self.height:
+                fitted_rect = self.background.get_rect().fit(self)
+                self.background = pg.transform.scale(self.background,(fitted_rect.width,fitted_rect.height))
+            surface.blit(self.background, dest=self.background.get_rect(center=self.move(delta_x,delta_y).center))
+        self._draw_text(surface,delta_x,delta_y)
 
     def _draw_text(self, surface, delta_x=0, delta_y=0):
         text_font = None
