@@ -14,22 +14,24 @@ class Enemy():
         # alive
         # health
         # speed
+        # value
         
-    def __init__(self, image, subpath, speed, angle = 90):
-        self.pos = Vector(subpath.start[0],subpath.start[1])
-        self.pos = self.pos + (random.randint(-10,10), random.randint(-10,10))
-        self.radius  = 10 
-        self.image = image
-        self.image = pg.transform.scale(self.image, (self.radius*2,)*2)
-        self.waypoint = Vector(subpath.end[0],subpath.end[1])
-        self.angle = (self.waypoint-self.pos).angle("deg")
+    def __init__(self, image, subpath, angle=90, radius=10, health_start=100, speed=10, value=1):
+        self.pos        = Vector(subpath.start[0],subpath.start[1])
+        self.pos        = self.pos + (random.randint(-10,10), random.randint(-10,10))
+        self.radius     = radius
+        self.image      = image
+        self.image      = pg.transform.scale(self.image, (self.radius*2,)*2)
+        self.waypoint   = Vector(subpath.end[0],subpath.end[1])
+        self.angle      = (self.waypoint-self.pos).angle("deg")
         self.varyPath(20)
-        self.current = 0 
+        self.current    = 0 
         
-        self.alive = True
-        self.health_start = 100
-        self.health = self.health_start
-        self.speed = speed
+        self.alive      = True
+        self.health_start = health_start
+        self.health     = self.health_start
+        self.speed      = speed/100
+        self.value      = value
         
     def update(self,subpaths,dt):
         if self.health <= 0:
