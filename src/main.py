@@ -2,7 +2,6 @@
 
 import pygame as pg
 import sys
-from map.Map import Map
 from game.Gameengine import Gameengine
 from imageloader.imageloader import *
 # import level?
@@ -14,11 +13,12 @@ path_data   = "../res/path_points.txt" # dann in map oder level je nachdem ...
 if __name__ == "__main__":
     pg.init()
     window_size = (800,600)
+    #main_surface = pg.display.set_mode(window_size, pg.FULLSCREEN)
     main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()
     
-    gameengine = Gameengine( Map(global_images["grass"], path_data, main_surface.get_size()), global_images["bullet"] )
-    gameengine.add_tower(global_images["tower"])
+    gameengine = Gameengine( global_images, path_data, window_size )
+    gameengine.add_tower(global_images["tower_turret"])
     gameengine.add_enemy(global_images["enemy"])
     
     gametime = 0

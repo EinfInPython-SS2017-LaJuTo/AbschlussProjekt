@@ -21,13 +21,13 @@ class Tower:
         # shot_frequency
         # shot_dt   (time since last shot)
         # shooting
-        # range
+        # shot_range
         
     # references:
         # enemies       (from gamemap)
         # subpaths      (from gamemap)
     
-    def __init__(self, image, enemies, subpaths):
+    def __init__(self, enemies,subpaths, image,shot_frequency,shot_range,shot_strength):
         self.pos = Vector(0,0)
         self.radius = 25
         self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
@@ -44,8 +44,9 @@ class Tower:
         self.target = None
         self.angle = 0
         
-        self.range  = 150
-        self.shot_frequency = 10
+        self.shot_range         = shot_range
+        self.shot_frequency     = shot_frequency
+        self.shot_strength      = shot_strength
         self.shot_dt = 0
         self.shooting = False
         
@@ -80,11 +81,12 @@ class Tower:
         if self.active: # doesn't shoot, if not placed down
             if self.shooting: self.shooting = False
             for enemy in self.enemies:
-                if (enemy.pos - self.pos).norm() < self.range:
+                if (enemy.pos - self.pos).norm() < self.shot_range:
                     self.target = enemy # aquire target
                     self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
                     self.nozzle = self.nozzle_original.rotate(self.angle)
-                    if self.shot_dt >= self.shot_frequency*dt:      # "may I soot?"
+                    
+                    if self.shot_dt >= 1000/self.shot_frequency:      # "may I shoot?"
                         self.shooting = True                        # fire!!
                         self.shot_dt = 0
                     else:
@@ -95,10 +97,10 @@ class Tower:
         rad2 = Vector(self.radius,self.radius)
         
         if not self.active:
-            surf = pg.Surface((self.range*2,)*2, pg.SRCALPHA)
-            pg.draw.circle(surf, (0,0,255,50), (self.range,)*2, self.range)
-            surface.blit(surf, self.pos-(self.range,)*2)
-            pg.draw.circle(surface, (0,0,255), self.pos, self.range,3)
+            surf = pg.Surface((self.shot_range*2,)*2, pg.SRCALPHA)
+            pg.draw.circle(surf, (0,0,255,50), (self.shot_range,)*2, self.shot_range)
+            surface.blit(surf, self.pos-(self.shot_range,)*2)
+            pg.draw.circle(surface, (0,0,255), self.pos, self.shot_range,3)
         
         render_image = pg.transform.rotozoom(self.image,-self.angle,1)
         draw_center = self.pos - Vector( *render_image.get_size() )/2

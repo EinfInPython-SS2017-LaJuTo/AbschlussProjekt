@@ -1,6 +1,7 @@
 from tower.Tower import Tower
 from enemy.Enemy import Enemy
 from tower.Bullet import Bullet
+from map.Map import Map
 
 class Gameengine():
     # attributes:
@@ -8,16 +9,19 @@ class Gameengine():
         # towers
         # enemies
         # bullets 
+        # tower_types
         
         # money
         
-    def __init__(self, gamemap, image_bullet):
-        self.gamemap = gamemap
+    def __init__(self, global_images, path_data, map_size):
+        self.global_images = global_images
+        self.gamemap = Map(global_images["grass"],path_data,map_size)
         
         self.towers = []
         self.enemies = []
         self.bullets = []
-        self.image_bullet = image_bullet
+        
+        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10), "fire":(global_images["tower_fire"],30,200,5)}
         
         self.money = 0
         
@@ -26,7 +30,7 @@ class Gameengine():
             if tower.alive:
                 tower.update(dt)
                 if tower.shooting:
-                    self.add_bullet(tower.pos-tower.nozzle, tower.target)
+                    self.add_bullet(tower.pos-tower.nozzle, tower.target, tower.shot_strength)
             else:
                 del self.towers[self.towers.index(tower)]
                 
@@ -54,12 +58,12 @@ class Gameengine():
             
                 
     def add_tower(self,img_path):
-        self.towers.append( Tower(img_path, self.enemies, self.gamemap.path.subpaths) )
+        self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, *self.tower_types["fire"]) )
     def del_tower(self,tower):
         del self.towers[ self.towers.index(tower) ]
     
-    def add_bullet(self,pos,target):
-        self.bullets.append( Bullet(self.image_bullet,pos,target) )
+    def add_bullet(self,pos,target,strength):
+        self.bullets.append( Bullet(self.global_images["bullet"],pos,target,strength) )
     def del_bullet(self,bullet):
         del self.bullets[ self.bullets.index(bullet) ]
     

@@ -12,7 +12,7 @@ class Bullet:
         # hitpoints
         # alive
         
-    def __init__(self,image_bullet,pos,target):
+    def __init__(self,image_bullet,pos,target ,hitpoints):
         self.radius = 5
         self.image = image_bullet
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
@@ -20,8 +20,9 @@ class Bullet:
         self.pos = Vector(pos[0],pos[1])
         self.vel = 0.5
         self.target = target
-        self.hitpoints = 10
+        self.hitpoints = hitpoints
         self.alive = True
+        
         
     def update(self,dt,bounds):
         # move
@@ -30,7 +31,7 @@ class Bullet:
         # hit
         if  (self.pos-self.target.pos).norm() <= self.target.radius + 5:
             self.alive = False
-            self.target.hit(self.hitpoints) # return, who got enemy
+            self.target.hit(self.hitpoints) # return, who got hit
         # out of bounds
         if ((self.pos[0]<0 or self.pos[0]>bounds[0]) or
            (self.pos[1]<0 or self.pos[1]>bounds[1])) :
