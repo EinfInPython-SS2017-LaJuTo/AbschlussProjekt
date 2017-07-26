@@ -2,6 +2,7 @@ from tower.Tower import Tower
 from enemy.Enemy import Enemy
 from tower.Bullet import Bullet
 from map.Map import Map
+from imageloader.imageloader import *
 
 class Gameengine():
     # attributes:
@@ -25,6 +26,8 @@ class Gameengine():
         
         self.money = 0
         
+        self.wavetime = 0
+        
     def update(self,dt): # dt := deltatime
         for tower in self.towers:
             if tower.alive:
@@ -46,6 +49,11 @@ class Gameengine():
             else:
                 self.money += enemy.value
                 del self.enemies[self.enemies.index(enemy)]
+        
+        self.wavetime += dt
+        if self.wavetime > 1000:
+            self.add_enemy(global_images["enemy"])
+            self.wavetime = 0
             
     def draw(self, surface):
         self.gamemap.draw(surface)
