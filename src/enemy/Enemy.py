@@ -64,12 +64,15 @@ class Enemy():
         vector_to_waypoint = self.waypoint - self.pos
         rand_offset = subpaths[0].width # [0] doesn't matter, just need an element of subpaths
         
-        if vector_to_waypoint.norm() > 1:                                   # if not yet at current waypoint
-            self.pos = self.pos + vector_to_waypoint.normalize() * self.speed*dt # go to current waypoint
+        # NOT YET AT WAYPOINT
+        if vector_to_waypoint.norm() > 5:                                   
+            self.pos = self.pos + vector_to_waypoint.normalize() * self.speed*dt 
+        # AT WAYPOINT != END
         elif self.current < len(subpaths)-1:
             self.current += 1
-            self.waypoint = subpaths[self.current].end # get next waypoint
+            self.waypoint = subpaths[self.current].end 
             self.varyPath(rand_offset)
+        # AT WAYPOINT == END
         elif self.current == len(subpaths)-1:
             self.current = 0
             self.waypoint = subpaths[self.current].end
