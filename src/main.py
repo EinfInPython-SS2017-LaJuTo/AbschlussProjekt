@@ -4,7 +4,7 @@ import pygame as pg
 import sys
 from map.Map import Map
 from game.Gameengine import Gameengine
-from imageloader import global_images
+from imageloader.imageloader import *
 # import level?
 # import wave?
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()
     
-    gameengine = Gameengine( Map(global_images["grass"], path_data, main_surface.get_size()), )
+    gameengine = Gameengine( Map(global_images["grass"], path_data, main_surface.get_size()) )
     gameengine.add_tower(global_images["tower"])
     gameengine.add_enemy(global_images["enemy"])
     

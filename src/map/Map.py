@@ -12,7 +12,7 @@ class Map:
     def __init__(self,image_map, path_data, size):
         self.size = size
         self.tilesize = 50
-        self.path = Path(path_data)
+        self.path = Path(path_data, 40, (200,200,100))
         self.bg_image = image_map
         self.bg_image = pg.transform.scale(self.bg_image, (self.tilesize,)*2)
     

@@ -10,10 +10,12 @@ class Path:
         # color
     
     def __init__(self,file, width, color):
-        self.readWaypoints(file)
-        self.assignSubpaths()
+        self.points = []
+        self.subpaths = []
         self.width = width
         self.color = color
+        self.readWaypoints(file)
+        self.assignSubpaths()
         
     def readWaypoints(self,file):
         file = open(file)
