@@ -12,9 +12,9 @@ class Bullet:
         # hitpoints
         # alive
         
-    def __init__(self,img_path,pos,target):
+    def __init__(self,image_bullet,pos,target):
         self.radius = 5
-        self.image = pg.image.load(img_path)
+        self.image = image_bullet
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
         
         self.pos = Vector(pos[0],pos[1])
