@@ -1,7 +1,7 @@
 from map.Path    import Path
 import pygame as pg
 
-class Map():
+class Map:
     # attributes:
         # size
         # towers
@@ -9,11 +9,11 @@ class Map():
         # path
         # bullets
         
-    def __init__(self,image_path, path_path, size):
+    def __init__(self,image_map, path_data, size):
         self.size = size
         self.tilesize = 50
-        self.path = Path(path_path)
-        self.bg_image = image_path
+        self.path = Path(path_data)
+        self.bg_image = image_map
         self.bg_image = pg.transform.scale(self.bg_image, (self.tilesize,)*2)
     
     def draw(self, surface):

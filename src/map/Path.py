@@ -2,14 +2,18 @@ import pygame as pg
 from lib.Vector import Vector
 
 class Path:
-    points = []
-    subpaths = []
-    width = 40
-    color = (200,200,100)
+    # attributes:
+        # points
+        # subpaths
+        
+        # width
+        # color
     
-    def __init__(self,file):
+    def __init__(self,file, width, color):
         self.readWaypoints(file)
         self.assignSubpaths()
+        self.width = width
+        self.color = color
         
     def readWaypoints(self,file):
         file = open(file)
