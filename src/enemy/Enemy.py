@@ -15,11 +15,11 @@ class Enemy():
         # health
         # speed
         
-    def __init__(self,image_path,subpath, speed, angle = 90):
+    def __init__(self, image, subpath, speed, angle = 90):
         self.pos = Vector(subpath.start[0],subpath.start[1])
         self.pos = self.pos + (random.randint(-10,10), random.randint(-10,10))
         self.radius  = 10 
-        self.image = image_path
+        self.image = image
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2)
         self.waypoint = Vector(subpath.end[0],subpath.end[1])
         self.angle = (self.waypoint-self.pos).angle("deg")

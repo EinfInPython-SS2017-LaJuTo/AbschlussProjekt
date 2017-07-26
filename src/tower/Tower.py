@@ -27,13 +27,13 @@ class Tower:
         # enemies       (from gamemap)
         # subpaths      (from gamemap)
     
-    def __init__(self,img_path, enemies, subpaths):
+    def __init__(self, image, enemies, subpaths):
         self.pos = Vector(0,0)
         self.radius = 25
         self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
         self.nozzle = self.nozzle_original
         
-        self.image = img_path
+        self.image = image
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
 
         self.alive = True
