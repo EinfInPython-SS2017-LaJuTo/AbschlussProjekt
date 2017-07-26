@@ -100,7 +100,7 @@ class Tower:
             surface.blit(surf, self.pos-(self.range,)*2)
             pg.draw.circle(surface, (0,0,255), self.pos, self.range,3)
         
-        render_image = pg.transform.rotate(self.image,-self.angle)
+        render_image = pg.transform.rotozoom(self.image,-self.angle,1)
         draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
         
