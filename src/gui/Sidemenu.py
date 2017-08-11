@@ -28,8 +28,12 @@ class Sidemenu(pg.Rect):
                     self.next_tower = None#TODO
 
     def release(self):
-        pass #TODO
+        pass #TODO (?)
 
     def draw(self, surface):
         surface.fill(self.bg_color, rect=self)
+        self.label_health.draw(surface)
+        self.label_money.draw(surface)
+        for t in self.towers:
+            surface.blit(t.image,(0,0))#TODO
 
