@@ -24,8 +24,10 @@ class Gameengine():
         self.idle_tower = None
         self.enemies = []
         self.bullets = []
-        
-        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), "fire":(global_images["tower_fire"],30,200,5,150)}
+        # image, shot_frequency, shot_range, shot_strength, cost
+        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), 
+                            "fire":(global_images["tower_fire"],30,200,5,150),
+                            "poison":(global_images["tower_poison"],1,100,40,200)}
         self.bullet_types = {"turret":(global_images["bullet"], 15), "fire":(global_images["bullet"], 25)}
         self.enemy_types = {"normal":(global_images["enemy"],15)}
         
