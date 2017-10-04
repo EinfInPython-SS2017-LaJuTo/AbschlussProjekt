@@ -25,9 +25,15 @@ class Gameengine():
         self.enemies = []
         self.bullets = []
         
-        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), "fire":(global_images["tower_fire"],30,200,5,150)}
-        self.bullet_types = {"turret":(global_images["bullet"], 15), "fire":(global_images["bullet"], 25)}
-        self.enemy_types = {"normal":(global_images["enemy"],15), "hard":(global_images["hardenemy"],5,500)}
+        # image, shot_frequency, shot_range, shot_strength, cost
+        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), 
+                            "fire":(global_images["tower_fire"],30,200,5,150),
+                            "poison":(global_images["tower_poison"],1,100,40,200)}
+        self.bullet_types = {"turret": global_images["bullet"], 
+                             "fire": global_images["bullet"],
+                             "poison": global_images["bullet"]}
+        self.enemy_types = {"normal":(global_images["enemy"],15),
+                            "hard":(global_images["hardenemy"],5,500)}
         
         self.money = 500
         self.health = 100
@@ -43,7 +49,7 @@ class Gameengine():
             if tower.alive:
                 tower.update(dt)
                 if tower.shooting:
-                    self.add_bullet(tower.pos-tower.nozzle, tower.target, tower.tower_type)
+                    self.add_bullet(tower.pos-tower.nozzle, tower.target,tower.shot_strength, tower.tower_type)
             else:
                 del self.towers[self.towers.index(tower)]
                 
@@ -86,8 +92,8 @@ class Gameengine():
     def del_tower(self,tower):
         del self.towers[ self.towers.index(tower) ]
     
-    def add_bullet(self,pos,target, bullet_type):
-        self.bullets.append( Bullet(pos,target, *self.bullet_types[bullet_type]) )
+    def add_bullet(self,pos,target,strength, bullet_type):
+        self.bullets.append( Bullet(pos,target,strength, self.bullet_types[bullet_type]) )
     def del_bullet(self,bullet):
         del self.bullets[ self.bullets.index(bullet) ]
     

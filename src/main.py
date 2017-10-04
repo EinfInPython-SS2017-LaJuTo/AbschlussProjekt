@@ -13,7 +13,7 @@ wave_data   = "../res/.txt"
 
 if __name__ == "__main__":
     pg.init()
-    window_size = (800,600)
+    window_size = (1280,720)
     #main_surface = pg.display.set_mode(window_size, pg.FULLSCREEN)
     main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()
