@@ -1,5 +1,6 @@
 import pygame as pg
 from gui.Label import Label
+from gui.Button import Button
 import math
 
 class Sidemenu(pg.Rect):
@@ -32,16 +33,23 @@ class Sidemenu(pg.Rect):
         self.label_money = Label(self.left, self.top + self._label_height + self._label_y_margin, self.width, self._label_height)
         self.gameengine = gameengine
         self.tower_keys = sorted(self.gameengine.tower_types.keys())
-        self.tower_images = {}
+        self.tower_buttons = {}
+        x = self.left
+        y = self._tower_y_start
         for k in self.tower_keys:
-            self.tower_images[k] = pg.transform.scale(self.gameengine.tower_types[k][0], (self._tower_wh,self._tower_wh))
+            self.tower_buttons[k] = Button(x,y,self._tower_wh, self._tower_wh, background=pg.transform.scale(self.gameengine.tower_types[k][0], (self._tower_wh,self._tower_wh)))
+            
+            if x == self.left:
+                x = self.left+self._tower_wh
+            else:
+                x = self.left
+                y += self._tower_wh
     
     def check_press(self, pos):
         if self.collidepoint(pos):
-            x,y = pos
-            index = ((y-self._tower_y_start)//(self._tower_wh))*2 + ((x-self.left) >= self._tower_wh) # Calculating the index in tower_keys 
-            if index>=0 and index < len(self.tower_keys):
-                self.gameengine.add_tower(self.tower_keys[index])
+            for k in self.tower_keys:
+                if self.tower_buttons[k].ckeck_press():
+                    gameengine.add_tower(k)
 
 
 
@@ -55,14 +63,7 @@ class Sidemenu(pg.Rect):
         self.label_health.draw(surface)
         self.label_money.draw(surface)
         
-        x = self.left
-        y = self._tower_y_start
 
-        for k in self.tower_keys:
-            surface.blit(self.tower_images[k],(x,y))
+        for b in tower_buttons:
+            b.draw(surface)
 
-            if x == self.left:
-                x = self.left+self._tower_wh
-            else:
-                x = self.left
-                y += self._tower_wh

@@ -17,6 +17,7 @@ class Button(Label):
     def check_press(self,pos):
         if self.collidepoint(*pos):
             self.pressed = True
+        return self.pressed
 
     def release(self):
         self.pressed = False
