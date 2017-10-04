@@ -3,6 +3,7 @@
 import pygame as pg
 import sys
 from game.Gameengine import Gameengine
+from gui.Sidemenu import Sidemenu
 # import level?
 # import wave?
 
@@ -20,8 +21,8 @@ if __name__ == "__main__":
     gameengine.add_tower("fire")
     gameengine.add_enemy("normal")
     
-    #button = Button(200,200,100,70)
-    
+    sidemenu = Sidemenu(window_size[0]-100,0,100,window_size[1], pg.Color(128,128,128), gameengine)
+
     while True:
         deltatime = clock.tick(framerate)
         
@@ -35,13 +36,14 @@ if __name__ == "__main__":
                 #button.check_press(pg.mouse.get_pos())
                 gameengine.towers[-1].place_down()
                 gameengine.add_enemy("normal")
+                sidemenu.check_press(e.pos)
                 
         # all the updating
         gameengine.update(deltatime)
 
         # all the drawing
         gameengine.draw(main_surface)
-        #button.draw(main_surface)
+        sidemenu.draw(main_surface)
         
         
 #        # TEST

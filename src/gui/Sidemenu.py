@@ -1,5 +1,5 @@
 import pygame as pg
-import gui.Label as Label
+from gui.Label import Label
 import math
 
 class Sidemenu(pg.Rect):
@@ -20,16 +20,16 @@ class Sidemenu(pg.Rect):
         # _tower_y_start
         # _tower_wh
 
-    def __init__(self, left, top, width, height, bg_color, towers, gameengine):
+    def __init__(self, left, top, width, height, bg_color, gameengine):
         self._label_height = 50
         self._label_y_margin = 5
-        self._tower_y_start = 2*(_label_height+_label_y_margin)
+        self._tower_y_start = 2*(self._label_height+self._label_y_margin)
         self._tower_wh = width//2
 
-        super().__init__(self, left, top, width, height)
+        super().__init__(left, top, width, height)
         self.bg_color = bg_color
-        self.label_health = Label(0,_label_y_margin, self.width, _label_height)
-        self.label_money = Label(0, _label_height+_label_y_margin, self.width, _label_height)
+        self.label_health = Label(self.left, self.top + self._label_y_margin, width, self._label_height)
+        self.label_money = Label(self.left, self.top + self._label_height + self._label_y_margin, self.width, self._label_height)
         self.gameengine = gameengine
         self.tower_keys = sorted(self.gameengine.tower_types.keys())
         self.tower_images = {}
@@ -40,7 +40,7 @@ class Sidemenu(pg.Rect):
         if self.collidepoint(pos):
             x,y = pos
             index = ((y-self._tower_y_start)//(self._tower_wh))*2 + ((x-self.left) >= self._tower_wh) # Calculating the index in tower_keys 
-            if(index < len(self.tower_keys)):
+            if index>=0 and index < len(self.tower_keys):
                 self.gameengine.add_tower(self.tower_keys[index])
 
 
@@ -50,6 +50,8 @@ class Sidemenu(pg.Rect):
 
     def draw(self, surface):
         surface.fill(self.bg_color, rect=self)
+        self.label_health.text = "HP "+str(self.gameengine.health)
+        self.label_money.text = "$  "+str(self.gameengine.money)
         self.label_health.draw(surface)
         self.label_money.draw(surface)
         
@@ -64,4 +66,3 @@ class Sidemenu(pg.Rect):
             else:
                 x = self.left
                 y += self._tower_wh
-
