@@ -13,8 +13,8 @@ class Tower:
         # image
         
         # alive
-        # active
-        # onPath
+        # idle
+        # palceable
         # edge      (points that make up hitbox)
         
         # target
@@ -29,7 +29,7 @@ class Tower:
         # enemies       (from gamemap)
         # subpaths      (from gamemap)
     
-    def __init__(self, enemies,subpaths, tower_type,image,shot_frequency,shot_range,shot_strength):
+    def __init__(self, enemies, tower_type,image,shot_frequency,shot_range,shot_strength):
         self.tower_type = tower_type
         self.pos = Vector(0,0)
         self.radius = 25
@@ -40,9 +40,8 @@ class Tower:
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
 
         self.alive = True
-        self.active = False
-        self.onPath = False
-        self.onTower = False
+        self.idle = True
+        self.placeable = False
         self.edge = self.setEdgePoints()
         
         self.target = None
@@ -56,57 +55,37 @@ class Tower:
         
         
         self.enemies = enemies
-        self.subpaths = subpaths
         
     def setEdgePoints(self):
         l = list( self.pos+(Vector(self.radius-4,0).rotate(a)) for a in range(0,360,int(360/8)))
         return l
-    
-    def isOnPath(self,path):
-        for subpath in path:
-            for point in self.edge:
-                if ((point[0]>subpath.left and point[0]<subpath.right)and
-                    (point[1]>subpath.top and point[1]<subpath.bottom) ):
-                    return True
-        
-    def isOnTower(self,towers):
-        for other in towers:
-            if Vector.norm(other.pos,self.pos) <= other.radius+self.radius:
-                return True
-    
-    def place_down(self):
-        if (not self.active) and (not self.onPath) and (not self.onTower):
-            self.active = True
             
     def update(self,dt):
-        self.onPath = self.isOnPath(self.subpaths)
-        self.onTower = self.isOnTower(self.towers)
-        if not self.active:
+        if self.idle:
             self.edge = self.setEdgePoints()
             self.pos = Vector(pg.mouse.get_pos()[0],pg.mouse.get_pos()[1])
-        
-        self.aim(dt)
+        else:
+            self.aim(dt) # doesn't aim, if not placed down
     
     def aim(self,dt):
-        if self.active: # doesn't shoot, if not placed down
-            if self.shooting: self.shooting = False
-            for enemy in self.enemies:
-                if (enemy.pos - self.pos).norm() < self.shot_range:
-                    self.target = enemy # aquire target
-                    self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
-                    self.nozzle = self.nozzle_original.rotate(self.angle)
-                    
-                    if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
-                        self.shooting = True                        # fire!!
-                        self.shot_dt = 0
-                    else:
-                        self.shot_dt += dt                          # count time since last shot
-                    break
+        if self.shooting: self.shooting = False
+        for enemy in self.enemies:
+            if (enemy.pos - self.pos).norm() < self.shot_range:
+                self.target = enemy # aquire target
+                self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
+                self.nozzle = self.nozzle_original.rotate(self.angle)
+                
+                if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
+                    self.shooting = True                        # fire!!
+                    self.shot_dt = 0
+                else:
+                    self.shot_dt += dt                          # count time since last shot
+                break
         
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
         
-        if not self.active:
+        if self.idle:
             surf = pg.Surface((self.shot_range*2,)*2, pg.SRCALPHA)
             pg.draw.circle(surf, (0,0,255,50), (self.shot_range,)*2, self.shot_range)
             surface.blit(surf, self.pos-(self.shot_range,)*2)
@@ -120,7 +99,7 @@ class Tower:
 #       for point in self.edge:
 #           pg.draw.circle(surface, (0,0,0), point.asInt() , 2)
         
-        if self.onPath:
+        if self.placeable:
             aSurf = pg.Surface((self.radius*2,)*2, pg.SRCALPHA)
             aSurf.convert_alpha()
             radius = int(self.radius)

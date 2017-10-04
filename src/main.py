@@ -34,9 +34,10 @@ if __name__ == "__main__":
                     sys.exit()
             elif e.type == pg.MOUSEBUTTONDOWN:
                 #button.check_press(pg.mouse.get_pos())
-                gameengine.towers[-1].place_down()
-                gameengine.add_tower("turret")
-                gameengine.add_enemy("normal")
+                #gameengine.towers[-1].place_down()
+                #gameengine.add_tower("turret")
+                #gameengine.add_enemy("normal")
+                gameengine.placeIdleTower()
                 sidemenu.check_press(e.pos)
                 
         # all the updating

@@ -3,6 +3,7 @@ from enemy.Enemy import Enemy
 from tower.Bullet import Bullet
 from map.Map import Map
 from imageloader.imageloader import global_images
+from lib.Vector import Vector
 
 class Gameengine():
     # attributes:
@@ -33,6 +34,10 @@ class Gameengine():
         self.wavetime = 0
         
     def update(self,dt): # dt := deltatime
+        # handle the idle_tower
+        self.checkIdleTower()
+
+        # handle the tower-list
         for tower in self.towers:
             if tower.alive:
                 tower.update(dt)
@@ -41,19 +46,22 @@ class Gameengine():
             else:
                 del self.towers[self.towers.index(tower)]
                 
+        # handle the bullet-list
         for bullet in self.bullets:
             if bullet.alive:
                 bullet.update(dt,self.gamemap.size)
             else:
                 del self.bullets[self.bullets.index(bullet)]
                 
+        # handle the enemy-list
         for enemy in self.enemies:
             if enemy.alive:
                 enemy.update(self.gamemap.path.subpaths,dt)
             else:
                 self.money += enemy.value
                 del self.enemies[self.enemies.index(enemy)]
-        
+                
+        # spawn enemies
         self.wavetime += dt
         if self.wavetime > 1000:
             self.add_enemy("normal")
@@ -71,7 +79,7 @@ class Gameengine():
                 
     def add_tower(self,tower_type):
         #self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type]) )
-        self.idle_tower = Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type])
+        self.idle_tower = Tower(self.enemies, tower_type,*self.tower_types[tower_type])
     def del_tower(self,tower):
         del self.towers[ self.towers.index(tower) ]
     
@@ -85,7 +93,26 @@ class Gameengine():
     def del_enemy(self,enemy):
         del self.enemies[ self.enemies.index(enemy) ]
         
+    def placeIdleTower(self):
+        if self.idle_tower != None and self.idle_tower.placeable: # MAY FAIL !!!!!!!!!!
+            self.idle_tower.idle = False
+            self.towers.append(self.idle_tower)
+            self.idle_tower = None
         
         
-        
-        
+    def checkIdleTower(self):
+        # check if it's on the paths
+        self.idle_tower.placeable = False
+        for subpath in self.gamemap.path.subpaths:
+            for point in self.idle_tower.edge:
+                if ((point[0]>subpath.left and point[0]<subpath.right)and
+                    (point[1]>subpath.top and point[1]<subpath.bottom) ):
+                    self.idle_tower.placeable = True # idle_tower is not on the path
+        # check if it's on other towers
+        for other in self.towers:
+            if Vector.norm(other.pos,self.idle_tower.pos) >= other.radius+self.idle_tower.radius:
+                self.idle_tower.placeable = False # idle_tower is on another tower though
+                    
+                
+                
+                
