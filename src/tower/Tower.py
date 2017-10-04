@@ -71,27 +71,30 @@ class Tower:
     def aim(self,dt):
         if self.shooting: self.shooting = False
         
+        # Find all enemies, that are in range
         inRange = []
-        closest = self.enemies[0]
         for enemy in self.enemies:
             if (enemy.pos - self.pos).norm() < self.shot_range:
                 inRange.append(enemy)
-            elif enemy in inRange:
-                inRange.remove(enemy)
-        for enemy in inRange:
-            if (enemy.pos - self.pos).norm() < (closest.pos - self.pos).norm():
-                closest = enemy
-        
-        self.target = closest # aquire target
-        self.angle = (self.pos-self.target.pos).angle("deg")  # "aim at enemy"
-        self.nozzle = self.nozzle_original.rotate(self.angle)
-        
-        if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
-            self.shooting = True                        # fire!!
-            self.shot_dt = 0
-        else:
-            self.shot_dt += dt                          # count time since last shot
-        
+                
+        # Find closest enemy of those
+        if len(inRange) > 0: 
+            closest = inRange[0]
+            for enemy in inRange:
+                if (enemy.pos - self.pos).norm() < (closest.pos - self.pos).norm():
+                    closest = enemy
+            
+            # Set closest as target
+            self.target = closest # aquire target
+            self.angle = (self.pos-self.target.pos).angle("deg")  # "aim at enemy"
+            self.nozzle = self.nozzle_original.rotate(self.angle)
+            
+            if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
+                self.shooting = True                        # fire!!
+                self.shot_dt = 0
+            else:
+                self.shot_dt += dt                          # count time since last shot
+            
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
         
