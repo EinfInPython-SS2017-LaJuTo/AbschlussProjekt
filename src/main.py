@@ -3,7 +3,6 @@
 import pygame as pg
 import sys
 from game.Gameengine import Gameengine
-from imageloader.imageloader import *
 # import level?
 # import wave?
 
@@ -17,9 +16,9 @@ if __name__ == "__main__":
     main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()
     
-    gameengine = Gameengine( global_images, path_data, window_size )
-    gameengine.add_tower(global_images["tower_turret"])
-    gameengine.add_enemy(global_images["enemy"])
+    gameengine = Gameengine( path_data, window_size )
+    gameengine.add_tower("fire")
+    gameengine.add_enemy("normal")
     
     #button = Button(200,200,100,70)
     
@@ -35,7 +34,7 @@ if __name__ == "__main__":
             elif e.type == pg.MOUSEBUTTONDOWN:
                 #button.check_press(pg.mouse.get_pos())
                 gameengine.towers[-1].place_down()
-                gameengine.add_enemy(global_images["enemy"])
+                gameengine.add_enemy("normal")
                 
         # all the updating
         gameengine.update(deltatime)

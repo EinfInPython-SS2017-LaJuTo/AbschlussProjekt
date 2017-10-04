@@ -2,7 +2,7 @@ from tower.Tower import Tower
 from enemy.Enemy import Enemy
 from tower.Bullet import Bullet
 from map.Map import Map
-from imageloader.imageloader import *
+from imageloader.imageloader import global_images
 
 class Gameengine():
     # attributes:
@@ -14,8 +14,7 @@ class Gameengine():
         
         # money
         
-    def __init__(self, global_images, path_data, map_size):
-        self.global_images = global_images
+    def __init__(self, path_data, map_size):
         self.gamemap = Map(global_images["grass"],path_data,map_size)
         
         self.towers = []
@@ -23,9 +22,10 @@ class Gameengine():
         self.bullets = []
         
         self.tower_types = {"turret":(global_images["tower_turret"],10,150,10), "fire":(global_images["tower_fire"],30,200,5)}
+        self.bullet_types = {"turret":(global_images["bullet"], 15), "fire":(global_images["bullet"], 25)}
+        self.enemy_types = {"normal":(global_images["enemy"],15)}
         
         self.money = 0
-        
         self.wavetime = 0
         
     def update(self,dt): # dt := deltatime
@@ -33,7 +33,7 @@ class Gameengine():
             if tower.alive:
                 tower.update(dt)
                 if tower.shooting:
-                    self.add_bullet(tower.pos-tower.nozzle, tower.target, tower.shot_strength)
+                    self.add_bullet(tower.pos-tower.nozzle, tower.target, tower.tower_type)
             else:
                 del self.towers[self.towers.index(tower)]
                 
@@ -52,7 +52,7 @@ class Gameengine():
         
         self.wavetime += dt
         if self.wavetime > 1000:
-            self.add_enemy(global_images["enemy"])
+            self.add_enemy("normal")
             self.wavetime = 0
             
     def draw(self, surface):
@@ -65,17 +65,22 @@ class Gameengine():
             enemy.draw(surface)
             
                 
-    def add_tower(self,img_path):
-        self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, *self.tower_types["fire"]) )
+    def add_tower(self,tower_type):
+        self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type]) )
     def del_tower(self,tower):
         del self.towers[ self.towers.index(tower) ]
     
-    def add_bullet(self,pos,target,strength):
-        self.bullets.append( Bullet(self.global_images["bullet"],pos,target,strength) )
+    def add_bullet(self,pos,target, bullet_type):
+        self.bullets.append( Bullet(pos,target, *self.bullet_types[bullet_type]) )
     def del_bullet(self,bullet):
         del self.bullets[ self.bullets.index(bullet) ]
     
-    def add_enemy(self,enemy_image):
-        self.enemies.append( Enemy(enemy_image,self.gamemap.path.subpaths[0],speed=15) )
+    def add_enemy(self,enemy_type):
+        self.enemies.append( Enemy(self.gamemap.path.subpaths[0], *self.enemy_types[enemy_type]) )
     def del_enemy(self,enemy):
         del self.enemies[ self.enemies.index(enemy) ]
+        
+        
+        
+        
+        

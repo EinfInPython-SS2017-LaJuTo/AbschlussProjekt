@@ -3,6 +3,8 @@ from lib.Vector import Vector
 
 class Tower:
     # attributes:
+        # tower_type
+        
         # pos
         # nozzle_original
         # nossle    (point of exit for the bullets) (relative to pos)
@@ -27,7 +29,8 @@ class Tower:
         # enemies       (from gamemap)
         # subpaths      (from gamemap)
     
-    def __init__(self, enemies,subpaths, image,shot_frequency,shot_range,shot_strength):
+    def __init__(self, enemies,subpaths, tower_type,image,shot_frequency,shot_range,shot_strength):
+        self.tower_type = tower_type
         self.pos = Vector(0,0)
         self.radius = 25
         self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
@@ -86,7 +89,7 @@ class Tower:
                     self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
                     self.nozzle = self.nozzle_original.rotate(self.angle)
                     
-                    if self.shot_dt >= 1000/self.shot_frequency:      # "may I shoot?"
+                    if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
                         self.shooting = True                        # fire!!
                         self.shot_dt = 0
                     else:
