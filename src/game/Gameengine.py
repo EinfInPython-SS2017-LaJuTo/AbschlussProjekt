@@ -36,7 +36,7 @@ class Gameengine():
     def update(self,dt): # dt := deltatime
         # handle the idle_tower
         self.checkIdleTower()
-
+        self.checkIdleTower.update(dt)
         # handle the tower-list
         for tower in self.towers:
             if tower.alive:
@@ -69,6 +69,7 @@ class Gameengine():
             
     def draw(self, surface):
         self.gamemap.draw(surface)
+        self.idle_tower.draw(surface)
         for tower in self.towers:
             tower.draw(surface)
         for bullet in self.bullets:
