@@ -8,16 +8,19 @@ class Gameengine():
     # attributes:
         # gamemap
         # towers
+        # idle_tower
         # enemies
         # bullets 
-        # tower_types
+        # tower_types, bullet_types, enemy_types
         
         # money
+        # wavetime
         
     def __init__(self, path_data, map_size):
         self.gamemap = Map(global_images["grass"],path_data,map_size)
         
         self.towers = []
+        self.idle_tower = None
         self.enemies = []
         self.bullets = []
         
@@ -66,7 +69,8 @@ class Gameengine():
             
                 
     def add_tower(self,tower_type):
-        self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type]) )
+        #self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type]) )
+        self.idle_tower = Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type])
     def del_tower(self,tower):
         del self.towers[ self.towers.index(tower) ]
     

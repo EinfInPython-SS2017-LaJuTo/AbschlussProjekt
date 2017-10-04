@@ -8,7 +8,7 @@ class Tower:
         # pos
         # nozzle_original
         # nossle    (point of exit for the bullets) (relative to pos)
-        # radius
+        # radius    (size of tower-image)
         
         # image
         
@@ -23,7 +23,7 @@ class Tower:
         # shot_frequency
         # shot_dt   (time since last shot)
         # shooting
-        # shot_range
+        # shot_range 
         
     # references:
         # enemies       (from gamemap)
@@ -42,6 +42,7 @@ class Tower:
         self.alive = True
         self.active = False
         self.onPath = False
+        self.onTower = False
         self.edge = self.setEdgePoints()
         
         self.target = None
@@ -68,12 +69,18 @@ class Tower:
                     (point[1]>subpath.top and point[1]<subpath.bottom) ):
                     return True
         
+    def isOnTower(self,towers):
+        for other in towers:
+            if Vector.norm(other.pos,self.pos) <= other.radius+self.radius:
+                return True
+    
     def place_down(self):
-        if (not self.active) and (not self.onPath):
+        if (not self.active) and (not self.onPath) and (not self.onTower):
             self.active = True
             
     def update(self,dt):
         self.onPath = self.isOnPath(self.subpaths)
+        self.onTower = self.isOnTower(self.towers)
         if not self.active:
             self.edge = self.setEdgePoints()
             self.pos = Vector(pg.mouse.get_pos()[0],pg.mouse.get_pos()[1])
