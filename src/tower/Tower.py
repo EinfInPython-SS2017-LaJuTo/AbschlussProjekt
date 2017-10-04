@@ -72,13 +72,12 @@ class Tower:
         if self.shooting: self.shooting = False
         
         inRange = []
+        closest = self.enemies[0]
         for enemy in self.enemies:
             if (enemy.pos - self.pos).norm() < self.shot_range:
                 inRange.append(enemy)
             elif enemy in inRange:
                 inRange.remove(enemy)
-        if len(inRange) > 0:
-            closest = inRange[0]
         for enemy in inRange:
             if (enemy.pos - self.pos).norm() < (closest.pos - self.pos).norm():
                 closest = enemy
