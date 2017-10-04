@@ -69,7 +69,7 @@ class Gameengine():
                 if enemy.health <= 0:
                     self.money += enemy.value
                 else:
-                    self.health -= enemy.health*enemy.value//100
+                    self.health -= enemy.value
                 del self.enemies[self.enemies.index(enemy)]
                 
         # spawn enemies
