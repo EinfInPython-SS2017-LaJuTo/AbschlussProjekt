@@ -39,6 +39,8 @@ if __name__ == "__main__":
                 #gameengine.add_enemy("normal")
                 gameengine.placeIdleTower()
                 sidemenu.check_press(e.pos)
+            elif e.type == pg.MOUSEBUTTONUP:
+                sidemenu.release()
                 
         # all the updating
         gameengine.update(deltatime)

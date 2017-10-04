@@ -48,13 +48,14 @@ class Sidemenu(pg.Rect):
     def check_press(self, pos):
         if self.collidepoint(pos):
             for k in self.tower_keys:
-                if self.tower_buttons[k].ckeck_press():
-                    gameengine.add_tower(k)
+                if self.tower_buttons[k].check_press(pos):
+                    self.gameengine.add_tower(k)
 
 
 
     def release(self):
-        pass
+        for k in self.tower_keys:
+            self.tower_buttons[k].release()
 
     def draw(self, surface):
         surface.fill(self.bg_color, rect=self)
@@ -64,6 +65,6 @@ class Sidemenu(pg.Rect):
         self.label_money.draw(surface)
         
 
-        for b in tower_buttons:
-            b.draw(surface)
+        for k in self.tower_keys:
+            self.tower_buttons[k].draw(surface)
 
