@@ -79,7 +79,7 @@ class Gameengine():
             self.wavecount += 1
             if self.wavecount % 5 == 0:
                 self.add_enemy("hard")
-                for u in range(0,wavecount//20):
+                for u in range(0,self.wavecount//20):
                     self.add_enemy("hard")
             else:
                 self.add_enemy("normal")
