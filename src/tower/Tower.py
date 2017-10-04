@@ -32,7 +32,7 @@ class Tower:
     def __init__(self, enemies, tower_type,image, shot_frequency, shot_range, shot_strength, cost):
         self.tower_type = tower_type
         self.pos = Vector(0,0)
-        self.radius = 25
+        self.radius = 35
         self.nozzle_original = Vector(0,self.radius-5) # sorry, but has to be hardcoded
         self.nozzle = self.nozzle_original
         
