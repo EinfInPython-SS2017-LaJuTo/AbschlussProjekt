@@ -28,7 +28,8 @@ class Gameengine():
         self.bullet_types = {"turret":(global_images["bullet"], 15), "fire":(global_images["bullet"], 25)}
         self.enemy_types = {"normal":(global_images["enemy"],15)}
         
-        self.money = 0
+        self.money = 500
+        self.health = 100
         self.wavetime = 0
         
     def update(self,dt): # dt := deltatime
