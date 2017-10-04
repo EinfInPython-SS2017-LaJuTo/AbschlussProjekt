@@ -96,11 +96,7 @@ class Tower:
         draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
         
-#       "hitbox"
-#       for point in self.edge:
-#           pg.draw.circle(surface, (0,0,0), point.asInt() , 2)
-        
-        if self.placeable:
+        if not self.placeable:
             aSurf = pg.Surface((self.radius*2,)*2, pg.SRCALPHA)
             aSurf.convert_alpha()
             radius = int(self.radius)
