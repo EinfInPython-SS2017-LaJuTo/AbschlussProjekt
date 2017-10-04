@@ -71,7 +71,7 @@ class Gameengine():
         # spawn enemies
         self.wavetime += dt
         if self.wavetime > 1000:
-            self.add_enemy("hard")
+            self.add_enemy("normal")
             self.wavetime = 0
             
     def draw(self, surface):
