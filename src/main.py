@@ -19,12 +19,18 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     
     gameengine = Gameengine( path_data,(window_size[0]-100,window_size[1]))
-    gameengine.add_enemy("normal")
     
     sidemenu = Sidemenu(window_size[0]-100,0,100,window_size[1], pg.Color(128,128,128), gameengine)
+    
+    running = True
+    doublespeed = False
 
     while True:
         deltatime = clock.tick(framerate)
+        if doublespeed:
+            deltatime *=2
+        if gameengine.health <= 0 or not running:
+            deltatime = 0
         
         for e in pg.event.get():
             if e.type == pg.QUIT:
@@ -34,6 +40,10 @@ if __name__ == "__main__":
                     sys.exit()
                 elif e.key == pg.K_ESCAPE:
                     gameengine.idle_tower=None
+                elif e.key == pg.K_SPACE:
+                    running = not running
+                elif e.key == pg.K_PLUS:
+                    doublespeed = not doublespeed
 
             elif e.type == pg.MOUSEBUTTONDOWN:
                 #button.check_press(pg.mouse.get_pos())
