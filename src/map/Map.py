@@ -1,7 +1,7 @@
 from map.Path    import Path
 import pygame as pg
 
-class Map:
+class Map(pg.Rect):
     # attributes:
         # size
         # towers
@@ -10,7 +10,7 @@ class Map:
         # bullets
         
     def __init__(self,image_map, path_data, size):
-        self.size = size
+        super().__init__(0,0,*size)
         self.tilesize = 50
         self.path = Path(path_data, 40, (200,200,100))
         self.bg_image = image_map

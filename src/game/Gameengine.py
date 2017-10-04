@@ -98,7 +98,6 @@ class Gameengine():
         
     def placeIdleTower(self):
         if self.idle_tower != None:
-            print(self.idle_tower.placeable)
             if self.idle_tower.placeable:
                 self.money -= self.idle_tower.cost
                 self.idle_tower.idle = False
@@ -107,11 +106,19 @@ class Gameengine():
             
         
     def checkIdleTower(self):
-        # check if it's on the paths
         self.idle_tower.placeable = True
+        # check if player has enough money
         if self.idle_tower.cost > self.money:
             self.idle_tower.placeable = False
             return
+        
+        # check if it's on the gamemap
+        for point in self.idle_tower.edge:
+            if not self.gamemap.collidepoint(point):
+                self.idle_tower.placeable = False
+                return
+                    
+        # check if it's on the paths
         for subpath in self.gamemap.path.subpaths:
             for point in self.idle_tower.edge:
                 if subpath.collidepoint(point):
@@ -122,7 +129,6 @@ class Gameengine():
             if Vector.norm(other.pos-self.idle_tower.pos) <= other.radius+self.idle_tower.radius:
                 self.idle_tower.placeable = False # idle_tower is on another tower though
                 return
-                    
                 
                 
                 
