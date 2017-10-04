@@ -32,8 +32,8 @@ class Gameengine():
         self.bullet_types = {"turret": global_images["bullet"], 
                              "fire": global_images["bullet"],
                              "poison": global_images["bullet"]}
-        self.enemy_types = {"normal":(global_images["enemy"],15,100,10),
-                            "hard":(global_images["hardenemy"],5,500,60)}
+        self.enemy_types = {"normal":(global_images["enemy"],15,100,5),
+                            "hard":(global_images["hardenemy"],5,500,40)}
         
         self.money = 500
         self.health = 100
