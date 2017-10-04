@@ -1,10 +1,19 @@
-class Wave():
+class Wave:
     
     def __init__(self, file):
-        self.
+        self.spawn = []
         self.readcfg(file)
     
     def readcfg(self, file):
         file = open(file)
         for line in file:
+            self.spawn.append(line)
             
+    def load(self, spawn):
+        for item in spawn:
+            if item == normal: 
+                add_enemy("normal")
+            if item == hard:
+                add_enemy("hard")
+            if item == delay:
+                self.wavetime += dt             
