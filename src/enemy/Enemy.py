@@ -16,7 +16,7 @@ class Enemy():
         # speed
         # value
         
-    def __init__(self, subpath, image,speed=10, health_start=100, value=10, angle=90, radius=10):
+    def __init__(self, subpath, image,speed=10, health_start=100, value=10, angle=90, radius=20):
         self.pos        = Vector(subpath.start[0],subpath.start[1])
         self.pos        = self.pos + (random.randint(-10,10), random.randint(-10,10))
         self.radius     = radius

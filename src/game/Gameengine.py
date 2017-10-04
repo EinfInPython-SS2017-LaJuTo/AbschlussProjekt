@@ -26,11 +26,11 @@ class Gameengine():
         self.bullets = []
         
         # image, shot_frequency, shot_range, shot_strength, cost
-        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), 
-                            "fire":(global_images["tower_fire"],30,200,5,150),
-                            "poison":(global_images["tower_poison"],1,100,40,200)}
+        self.tower_types = {"turret":(global_images["tower_turret"],10,200,10,100), 
+                            "gatling":(global_images["tower_gatling"], 20,250, 5,150),
+                            "poison":(global_images["tower_poison"], 1,150,40,200)}
         self.bullet_types = {"turret": global_images["bullet"], 
-                             "fire": global_images["bullet"],
+                             "gatling": global_images["bullet"],
                              "poison": global_images["bullet"]}
         self.enemy_types = {"normal":(global_images["enemy"],15,100,10),
                             "hard":(global_images["hardenemy"],5,500,60)}
