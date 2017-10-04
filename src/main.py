@@ -31,6 +31,9 @@ if __name__ == "__main__":
             elif e.type == pg.KEYDOWN:
                 if e.key == pg.K_q:
                     sys.exit()
+                elif e.key == pg.K_ESCAPE:
+                    gameengine.idle_tower=None
+
             elif e.type == pg.MOUSEBUTTONDOWN:
                 #button.check_press(pg.mouse.get_pos())
                 #gameengine.towers[-1].place_down()
