@@ -42,7 +42,7 @@ if __name__ == "__main__":
                     gameengine.idle_tower=None
                 elif e.key == pg.K_SPACE:
                     running = not running
-                elif e.key == pg.K_PLUS or e.key == pg.K_h:
+                elif e.key == pg.K_PLUS or e.unicode == '+' or e.key == pg.K_h:
                     doublespeed = not doublespeed
 
             elif e.type == pg.MOUSEBUTTONDOWN:
