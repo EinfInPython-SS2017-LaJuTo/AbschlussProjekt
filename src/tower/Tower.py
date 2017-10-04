@@ -70,33 +70,44 @@ class Tower:
     
     def aim(self,dt):
         if self.shooting: self.shooting = False
+        
+        inRange = []
         for enemy in self.enemies:
             if (enemy.pos - self.pos).norm() < self.shot_range:
-                self.target = enemy # aquire target
-                self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
-                self.nozzle = self.nozzle_original.rotate(self.angle)
-                
-                if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
-                    self.shooting = True                        # fire!!
-                    self.shot_dt = 0
-                else:
-                    self.shot_dt += dt                          # count time since last shot
-                break
+                inRange.append(enemy)
+            elif enemy in inRange:
+                inRange.remove(enemy)
+        if len(inRange) > 0:
+            closest = inRange[0]
+        for enemy in inRange:
+            if (enemy.pos - self.pos).norm() < (closest.pos - self.pos).norm():
+                closest = enemy
+        
+        self.target = closest # aquire target
+        self.angle = (self.pos-self.target.pos).angle("deg")  # "aim at enemy"
+        self.nozzle = self.nozzle_original.rotate(self.angle)
+        
+        if self.shot_dt >= 1000/self.shot_frequency:    # "may I shoot?"
+            self.shooting = True                        # fire!!
+            self.shot_dt = 0
+        else:
+            self.shot_dt += dt                          # count time since last shot
         
     def draw(self,surface): 
         rad2 = Vector(self.radius,self.radius)
         
-        if self.idle:
+        if self.idle: # Range-circle
             surf = pg.Surface((self.shot_range*2,)*2, pg.SRCALPHA)
             pg.draw.circle(surf, (0,0,255,50), (self.shot_range,)*2, self.shot_range)
             surface.blit(surf, self.pos-(self.shot_range,)*2)
             pg.draw.circle(surface, (0,0,255), self.pos, self.shot_range,3)
         
+        # Tower itself
         render_image = pg.transform.rotozoom(self.image,-self.angle,1)
         draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
         
-        if not self.placeable:
+        if not self.placeable: # Red circle, if not allowed to place
             aSurf = pg.Surface((self.radius*2,)*2, pg.SRCALPHA)
             aSurf.convert_alpha()
             radius = int(self.radius)
