@@ -27,10 +27,10 @@ if __name__ == "__main__":
 
     while True:
         deltatime = clock.tick(framerate)
-        if doublespeed:
-            deltatime *=2
         if gameengine.health <= 0 or not running:
             deltatime = 0
+        if doublespeed:
+            deltatime *=2
         
         for e in pg.event.get():
             if e.type == pg.QUIT:
