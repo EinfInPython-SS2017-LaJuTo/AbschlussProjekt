@@ -70,14 +70,14 @@ class Gameengine():
             
     def draw(self, surface):
         self.gamemap.draw(surface)
-        if self.idle_tower != None :
-            self.idle_tower.draw(surface)
         for tower in self.towers:
             tower.draw(surface)
         for bullet in self.bullets:
             bullet.show(surface)
         for enemy in self.enemies:
             enemy.draw(surface)
+        if self.idle_tower != None :
+            self.idle_tower.draw(surface)
             
                 
     def add_tower(self,tower_type):
@@ -98,6 +98,7 @@ class Gameengine():
         
     def placeIdleTower(self):
         if self.idle_tower != None:
+            print(self.idle_tower.placeable)
             if self.idle_tower.placeable:
                 self.money -= self.idle_tower.cost
                 self.idle_tower.idle = False
