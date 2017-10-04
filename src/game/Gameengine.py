@@ -98,7 +98,6 @@ class Gameengine():
         
     def placeIdleTower(self):
         if self.idle_tower != None:
-            print(self.idle_tower.placeable)
             if self.idle_tower.placeable:
                 self.idle_tower.idle = False
                 self.towers.append(self.idle_tower)
