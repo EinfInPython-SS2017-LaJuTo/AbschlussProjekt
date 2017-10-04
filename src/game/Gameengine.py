@@ -27,7 +27,7 @@ class Gameengine():
         
         self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), "fire":(global_images["tower_fire"],30,200,5,150)}
         self.bullet_types = {"turret":(global_images["bullet"], 15), "fire":(global_images["bullet"], 25)}
-        self.enemy_types = {"normal":(global_images["enemy"],15)}
+        self.enemy_types = {"normal":(global_images["enemy"],15), "hard":(global_images["hardenemy"],5,500)}
         
         self.money = 500
         self.health = 100
@@ -65,7 +65,7 @@ class Gameengine():
         # spawn enemies
         self.wavetime += dt
         if self.wavetime > 1000:
-            self.add_enemy("normal")
+            self.add_enemy("hard")
             self.wavetime = 0
             
     def draw(self, surface):

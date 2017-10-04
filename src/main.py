@@ -9,6 +9,7 @@ from gui.Sidemenu import Sidemenu
 
 framerate = 60
 path_data   = "../res/path_points.txt" # dann in map oder level je nachdem ...
+wave_data   = "../res/.txt"
 
 if __name__ == "__main__":
     pg.init()

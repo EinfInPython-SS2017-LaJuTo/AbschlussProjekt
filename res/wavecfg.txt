@@ -1,0 +1,10 @@
+class Wave():
+    
+    def __init__(self, file):
+        self.
+        self.readcfg(file)
+    
+    def readcfg(self, file):
+        file = open(file)
+        for line in file:
+            
