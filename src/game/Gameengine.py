@@ -30,8 +30,8 @@ class Gameengine():
                             "gatling":(global_images["tower_gatling"], 20,250, 5,150),
                             "poison":(global_images["tower_poison"], 1,150,40,200)}
         self.bullet_types = {"turret": global_images["bullet"], 
-                             "gatling": global_images["bullet"],
-                             "poison": global_images["bullet"]}
+                             "gatling": global_images["gatling"],
+                             "poison": global_images["poison"]}
         self.enemy_types = {"normal":(global_images["enemy"],15,100,5),
                             "hard":(global_images["hardenemy"],5,500,40)}
         

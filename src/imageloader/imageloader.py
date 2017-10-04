@@ -7,5 +7,7 @@ global_images = {
         'grass':    pg.image.load("../res/grass.png"),
         'enemy':    pg.image.load("../res/enemy.png"),
         'hardenemy':    pg.image.load("../res/hardenemy.png"),
-        'bullet':   pg.image.load("../res/bullet.png")
+        'bullet':   pg.image.load("../res/bullet.png"),
+        'gatling':   pg.image.load("../res/gatling_bullet.png"),
+        'poison':   pg.image.load("../res/poison_bullet.png")
         }       
