@@ -26,14 +26,14 @@ class Gameengine():
         self.bullets = []
         
         # image, shot_frequency, shot_range, shot_strength, cost
-        self.tower_types = {"turret":(global_images["tower_turret"],10,200,10,100), 
-                            "gatling":(global_images["tower_gatling"], 20,250, 5,150),
+        self.tower_types = {"turret":(global_images["tower_turret"],10,200,10,150), 
+                            "gatling":(global_images["tower_gatling"], 20,250, 5,250),
                             "poison":(global_images["tower_poison"], 1,150,40,200)}
         self.bullet_types = {"turret": global_images["bullet"], 
                              "gatling": global_images["bullet"],
                              "poison": global_images["bullet"]}
         self.enemy_types = {"normal":(global_images["enemy"],15,100,5),
-                            "hard":(global_images["hardenemy"],5,500,40)}
+                            "hard":(global_images["hardenemy"],5,500,50)}
         
         self.money = 500
         self.health = 100
@@ -77,9 +77,10 @@ class Gameengine():
         if self.wavetime> 1000:
             self.wavetime = 0 
             self.wavecount += 1
-            if self.wavecount >= 5:
+            if self.wavecount % 5 == 0:
                 self.add_enemy("hard")
-                self.wavecount=0
+                for u in range(0,wavecount//20):
+                    self.add_enemy("hard")
             else:
                 self.add_enemy("normal")
             
