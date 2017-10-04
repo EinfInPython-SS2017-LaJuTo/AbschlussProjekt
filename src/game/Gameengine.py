@@ -25,7 +25,7 @@ class Gameengine():
         self.enemies = []
         self.bullets = []
         
-        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10), "fire":(global_images["tower_fire"],30,200,5)}
+        self.tower_types = {"turret":(global_images["tower_turret"],10,150,10,100), "fire":(global_images["tower_fire"],30,200,5,150)}
         self.bullet_types = {"turret":(global_images["bullet"], 15), "fire":(global_images["bullet"], 25)}
         self.enemy_types = {"normal":(global_images["enemy"],15)}
         
@@ -35,7 +35,7 @@ class Gameengine():
         
     def update(self,dt): # dt := deltatime
         # handle the idle_tower
-        if self.idle_tower != None :
+        if self.idle_tower != None:
             self.checkIdleTower()
             self.idle_tower.update(dt)
         # handle the tower-list
@@ -100,6 +100,7 @@ class Gameengine():
         if self.idle_tower != None:
             print(self.idle_tower.placeable)
             if self.idle_tower.placeable:
+                self.money -= self.idle_tower.cost
                 self.idle_tower.idle = False
                 self.towers.append(self.idle_tower)
                 self.idle_tower = None
@@ -108,14 +109,19 @@ class Gameengine():
     def checkIdleTower(self):
         # check if it's on the paths
         self.idle_tower.placeable = True
+        if self.idle_tower.cost > self.money:
+            self.idle_tower.placeable = False
+            return
         for subpath in self.gamemap.path.subpaths:
             for point in self.idle_tower.edge:
                 if subpath.collidepoint(point):
                     self.idle_tower.placeable = False
+                    return
         # check if it's on other towers
         for other in self.towers:
             if Vector.norm(other.pos-self.idle_tower.pos) <= other.radius+self.idle_tower.radius:
                 self.idle_tower.placeable = False # idle_tower is on another tower though
+                return
                     
                 
                 

@@ -27,8 +27,8 @@ class Button(Label):
 #            surface.fill(self.bg_color-pg.Color(32,32,32), rect=self)
 #            pg.draw.rect(surface, self.line_color, self, self.line_width)
             super().draw(surface,self.line_width, self.line_width)
-            pg.draw.rect(surface, self.line_color, self.inflate(-8*self.line_width, -8*self.line_width).move(self.line_width, self.line_width), self.line_width)
+#            pg.draw.rect(surface, self.line_color, self.inflate(-8*self.line_width, -8*self.line_width).move(self.line_width, self.line_width), self.line_width)
         else:
             surface.fill(self.bg_color,rect=self)
             super().draw(surface, -self.line_width, -self.line_width)
-            pg.draw.rect(surface, self.line_color, self.inflate(-8*self.line_width, -8*self.line_width).move(-self.line_width, -self.line_width), self.line_width)
+#            pg.draw.rect(surface, self.line_color, self.inflate(-8*self.line_width, -8*self.line_width).move(-self.line_width, -self.line_width), self.line_width)

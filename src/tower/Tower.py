@@ -29,7 +29,7 @@ class Tower:
         # enemies       (from gamemap)
         # subpaths      (from gamemap)
     
-    def __init__(self, enemies, tower_type,image,shot_frequency,shot_range,shot_strength):
+    def __init__(self, enemies, tower_type,image,shot_frequency, shot_range, shot_strength, cost):
         self.tower_type = tower_type
         self.pos = Vector(0,0)
         self.radius = 25
@@ -53,6 +53,7 @@ class Tower:
         self.shot_dt = 0
         self.shooting = False
         
+        self.cost = cost
         
         self.enemies = enemies
         
