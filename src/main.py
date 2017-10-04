@@ -12,7 +12,7 @@ path_data   = "../res/path_points.txt" # dann in map oder level je nachdem ...
 
 if __name__ == "__main__":
     pg.init()
-    window_size = (800,600)
+    window_size = (1280,720)
     #main_surface = pg.display.set_mode(window_size, pg.FULLSCREEN)
     main_surface = pg.display.set_mode(window_size)
     clock = pg.time.Clock()

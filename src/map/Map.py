@@ -18,8 +18,8 @@ class Map(pg.Rect):
     
     def draw(self, surface):
         # background_image
-        for x in range(int(self.size[0]/self.tilesize)):
-            for y in range(int(self.size[1]/self.tilesize)):
+        for x in range(int(self.size[0]/self.tilesize)+1):
+            for y in range(int(self.size[1]/self.tilesize)+1):
                 surface.blit(self.bg_image, (x*self.tilesize,y*self.tilesize))
         # path
         self.path.draw(surface)        
