@@ -35,7 +35,7 @@ class Sidemenu(pg.Rect):
         self.label_health = Label(self.left, self.top + self._label_y_margin, width, self._label_height)
         self.label_money = Label(self.left, self.top + self._label_height + self._label_y_margin, self.width, self._label_height)
         self.gameengine = gameengine
-        self.tower_keys = sorted(self.gameengine.tower_types.keys())
+        self.tower_keys = sorted(self.gameengine.tower_types.keys(),key=lambda s:self.gameengine.tower_types[s][4])
         self.tower_buttons = {}
         self.tower_cost_labels = {}
         x = self.left
