@@ -32,12 +32,13 @@ class Gameengine():
         self.bullet_types = {"turret": global_images["bullet"], 
                              "fire": global_images["bullet"],
                              "poison": global_images["bullet"]}
-        self.enemy_types = {"normal":(global_images["enemy"],15),
-                            "hard":(global_images["hardenemy"],5,500)}
+        self.enemy_types = {"normal":(global_images["enemy"],15,100,10),
+                            "hard":(global_images["hardenemy"],5,500,60)}
         
         self.money = 500
         self.health = 100
         self.wavetime = 0
+        self.wavecount = 0
         
     def update(self,dt): # dt := deltatime
         # handle the idle_tower
@@ -65,14 +66,23 @@ class Gameengine():
             if enemy.alive:
                 enemy.update(self.gamemap.path.subpaths,dt)
             else:
-                self.money += enemy.value
+                if enemy.health <= 0:
+                    self.money += enemy.value
+                else:
+                    self.health -= enemy.health*enemy.value//100
                 del self.enemies[self.enemies.index(enemy)]
                 
         # spawn enemies
         self.wavetime += dt
-        if self.wavetime > 1000:
-            self.add_enemy("normal")
-            self.wavetime = 0
+        if self.wavetime> 1000:
+            self.wavetime = 0 
+            self.wavecount += 1
+            if self.wavecount >= 5:
+                self.add_enemy("hard")
+                self.wavecount=0
+            else:
+                self.add_enemy("normal")
+            
             
     def draw(self, surface):
         self.gamemap.draw(surface)

@@ -16,7 +16,7 @@ class Enemy():
         # speed
         # value
         
-    def __init__(self, subpath, image,speed=10, health_start=100, angle=90, radius=10, value=1):
+    def __init__(self, subpath, image,speed=10, health_start=100, value=10, angle=90, radius=10):
         self.pos        = Vector(subpath.start[0],subpath.start[1])
         self.pos        = self.pos + (random.randint(-10,10), random.randint(-10,10))
         self.radius     = radius
@@ -74,10 +74,11 @@ class Enemy():
             self.varyPath(rand_offset)
         # AT WAYPOINT == END
         elif self.current == len(subpaths)-1:
-            self.current = 0
-            self.waypoint = subpaths[self.current].end
-            self.pos = subpaths[self.current].start
-            self.varyPath(rand_offset)
+#            self.current = 0
+#            self.waypoint = subpaths[self.current].end
+#            self.pos = subpaths[self.current].start
+#            self.varyPath(rand_offset)
+            self.alive = False
             
     def varyPath(self,amount):
         self.waypoint = self.waypoint + (random.randint(-amount/4,amount/4),random.randint(-amount/4,amount/4))
