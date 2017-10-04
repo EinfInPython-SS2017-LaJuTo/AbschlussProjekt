@@ -35,8 +35,9 @@ class Gameengine():
         
     def update(self,dt): # dt := deltatime
         # handle the idle_tower
-        self.checkIdleTower()
-        self.checkIdleTower.update(dt)
+        if self.idle_tower != None :
+            self.checkIdleTower()
+            self.idle_tower.update(dt)
         # handle the tower-list
         for tower in self.towers:
             if tower.alive:
@@ -69,7 +70,8 @@ class Gameengine():
             
     def draw(self, surface):
         self.gamemap.draw(surface)
-        self.idle_tower.draw(surface)
+        if self.idle_tower != None :
+            self.idle_tower.draw(surface)
         for tower in self.towers:
             tower.draw(surface)
         for bullet in self.bullets:
@@ -95,23 +97,24 @@ class Gameengine():
         del self.enemies[ self.enemies.index(enemy) ]
         
     def placeIdleTower(self):
-        if self.idle_tower != None and self.idle_tower.placeable: # MAY FAIL !!!!!!!!!!
-            self.idle_tower.idle = False
-            self.towers.append(self.idle_tower)
-            self.idle_tower = None
-        
+        if self.idle_tower != None:
+            print(self.idle_tower.placeable)
+            if self.idle_tower.placeable:
+                self.idle_tower.idle = False
+                self.towers.append(self.idle_tower)
+                self.idle_tower = None
+            
         
     def checkIdleTower(self):
         # check if it's on the paths
-        self.idle_tower.placeable = False
+        self.idle_tower.placeable = True
         for subpath in self.gamemap.path.subpaths:
             for point in self.idle_tower.edge:
-                if ((point[0]>subpath.left and point[0]<subpath.right)and
-                    (point[1]>subpath.top and point[1]<subpath.bottom) ):
-                    self.idle_tower.placeable = True # idle_tower is not on the path
+                if subpath.collidepoint(point):
+                    self.idle_tower.placeable = False
         # check if it's on other towers
         for other in self.towers:
-            if Vector.norm(other.pos,self.idle_tower.pos) >= other.radius+self.idle_tower.radius:
+            if Vector.norm(other.pos-self.idle_tower.pos) <= other.radius+self.idle_tower.radius:
                 self.idle_tower.placeable = False # idle_tower is on another tower though
                     
                 

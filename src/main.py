@@ -18,7 +18,6 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     
     gameengine = Gameengine( path_data, window_size )
-    gameengine.add_tower("fire")
     gameengine.add_enemy("normal")
     
     sidemenu = Sidemenu(window_size[0]-100,0,100,window_size[1], pg.Color(128,128,128), gameengine)
