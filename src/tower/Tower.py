@@ -68,7 +68,23 @@ class Tower:
         else:
             self.aim(dt) # doesn't aim, if not placed down
     
+    
+    # aims at enemy, furthest down the path
     def aim(self,dt):
+        if self.shooting: self.shooting = False
+        for enemy in self.enemies:
+            if (enemy.pos - self.pos).norm() < self.shot_range:
+                self.target = enemy # aquire target
+                self.angle = (self.pos-enemy.pos).angle("deg")  # "aim at enemy"
+                self.nozzle = self.nozzle_original.rotate(self.angle)
+                if self.shot_dt >= 1000/self.shot_frequency:      # "may I soot?"
+                    self.shooting = True                        # fire!!
+                    self.shot_dt = 0
+                else:
+                    self.shot_dt += dt                          # count time since last shot
+                break
+    # aims at nearest enemy
+    def aimnear(self,dt):
         if self.shooting: self.shooting = False
         
         # Find all enemies, that are in range
