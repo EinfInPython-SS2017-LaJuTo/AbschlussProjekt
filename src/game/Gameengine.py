@@ -32,10 +32,11 @@ class Gameengine():
         self.bullet_types = {"turret": global_images["bullet"], 
                              "gatling": global_images["gatling"],
                              "poison": global_images["poison"]}
-        self.enemy_types = {"normal":(global_images["enemy"],15,100,5),
-                            "hard":(global_images["hardenemy"],5,500,50)}
+        # image, speed, health, value
+        self.enemy_types = {"normal":(global_images["enemy"],7,100,5),
+                            "strong":(global_images["strong_enemy"],4,300,50)}
         
-        self.money = 500
+        self.money = 100
         self.health = 100
         self.wavetime = 0
         self.wavecount = 0
@@ -78,7 +79,7 @@ class Gameengine():
             self.wavetime = 0 
             self.wavecount += 1
             if self.wavecount % 5 == 0:
-                self.add_enemy("hard")
+                self.add_enemy("strong")
                 #TODO:More enemies!
             else:
                 self.add_enemy("normal")
