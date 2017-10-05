@@ -4,6 +4,7 @@ from tower.Bullet import Bullet
 from map.Map import Map
 from imageloader.imageloader import global_images
 from lib.Vector import Vector
+from wavemanager.wavemanager import Wavemanager
 
 class Gameengine():
     # attributes:
@@ -38,8 +39,9 @@ class Gameengine():
         
         self.money = 150
         self.health = 100
-        self.wavetime = 0
-        self.wavecount = 0
+        
+        self.wavemanager = Wavemanager()
+        
         
     def update(self,dt): # dt := deltatime
         # handle the idle_tower
@@ -74,15 +76,19 @@ class Gameengine():
                 del self.enemies[self.enemies.index(enemy)]
                 
         # spawn enemies
-        self.wavetime += dt
-        if self.wavetime > 1000:
-            self.wavetime = 0 
-            self.wavecount += 1
-            if self.wavecount % 5 == 0:
-                self.add_enemy("strong")
-                #TODO:More enemies!
-            else:
-                self.add_enemy("normal")
+        order = self.wavemanager.update(dt)
+        if order != "hold" and order != None:
+            self.add_enemy(order)
+        
+        #self.wavetime += dt
+        #if self.wavetime > 1000:
+        #    self.wavetime = 0 
+        #    self.wavecount += 1
+        #    if self.wavecount % 5 == 0:
+        #        self.add_enemy("strong")
+        #        #TODO:More enemies!
+        #    else:
+        #        self.add_enemy("normal")
             
             
     def draw(self, surface):

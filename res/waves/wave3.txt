@@ -1,0 +1,8 @@
+duration 30
+
+normal 5
+strong 2
+delay 5
+strong 5
+delay 5
+normal 2

@@ -1,0 +1,4 @@
+duration 30
+
+normal 7
+strong 3

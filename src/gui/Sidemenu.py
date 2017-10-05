@@ -1,7 +1,16 @@
 import pygame as pg
 from gui.Label import Label
 from gui.Button import Button
-import math
+
+# TODO:
+#   IMPORTANT
+#   Wave-Nr.-Display
+#   Wave-countdown-Display (to let player know, how long until next wave)
+#   
+#   OPTIONAL
+#   Button to immediately send next wave
+#   Wave-Preview (how many enemies of what kind)
+
 
 class Sidemenu(pg.Rect):
 
