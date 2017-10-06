@@ -3,7 +3,7 @@ class Wavemanager():
     def __init__(self, frequency = 2500):
         self.folder = "../res/waves/"
         self.current = 0  # Current wave#.txt-file
-        self.max = 3      # max amount of wave#.txt-files (must not exceed wave#.txt-files in folder "waves")
+        self.max = 3     # max amount of wave#.txt-files (must not exceed wave#.txt-files in folder "waves")
         self.frequency = frequency # spawn-tick-frequency 
         
         # current wave
@@ -14,7 +14,10 @@ class Wavemanager():
     
     def nextWave(self):
         self.wavetick = 0
-        self.current += 1
+        if self.current < self.max:
+            self.current += 1
+        elif self.current == self.max:
+            self.current = 1
         file = open(self.folder+"wave"+str(self.current)+".txt")
         for line in file:
             content = line.strip().split(" ")
@@ -39,7 +42,7 @@ class Wavemanager():
                 self.queue.append(order)
 
     def update(self,dt):
-        if (self.current == 0 or self.wavetick >= self.duration) and self.current < self.max:
+        if self.current == 0 or self.wavetick >= self.duration:
             self.nextWave()
             
         self.wavetime += dt
