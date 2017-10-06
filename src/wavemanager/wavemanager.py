@@ -10,10 +10,7 @@ class Wavemanager():
         self.wavetime = 0
         self.wavetick = 0
         self.duration = 0
-        self.que = []
-    
-    def addToQue(self, element):
-        self.que.append(element)
+        self.queue = []
     
     def nextWave(self):
         self.wavetick = 0
@@ -23,11 +20,11 @@ class Wavemanager():
             content = line.strip().split(" ")
             if len(content) > 1:
                 self.readLine(content)
-        if len(self.que) < self.duration:
-            for i in range(self.duration-len(self.que)):
-                self.que.append("hold")
-        print("Que loaded: ")
-        print(self.que)
+        if len(self.queue) < self.duration:
+            for i in range(self.duration-len(self.queue)):
+                self.queue.append("hold")
+        print("Queue loaded: ")
+        print(self.queue)
             
     def readLine(self,content):
         order = content[0]
@@ -36,24 +33,24 @@ class Wavemanager():
             self.duration = amount
         elif order == "delay":
             for i in range(amount):
-                self.que.append("hold")
+                self.queue.append("hold")
         else:
             for i in range(amount):
-                self.que.append(order)
+                self.queue.append(order)
 
     def update(self,dt):
         if (self.current == 0 or self.wavetick >= self.duration) and self.current < self.max:
             self.nextWave()
             
         self.wavetime += dt
-        if self.wavetime > 1000 and len(self.que)>0:
+        if self.wavetime > 1000 and len(self.queue)>0:
             self.wavetime = 0
             self.wavetick += 1
-            order = self.que[0]
-            del self.que[0]
+            order = self.queue[0]
+            del self.queue[0]
             if order != "Hold":
                 print("Spawned: "+order)
-                print(self.que)
+                print(self.queue)
                 print(str(self.duration)+" "+str(self.wavetick))
             return order
             
