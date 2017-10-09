@@ -48,12 +48,15 @@ if __name__ == "__main__":
                     doublespeed = not doublespeed
 
             elif e.type == pg.MOUSEBUTTONDOWN:
+                if e.button == 1:
                 #button.check_press(pg.mouse.get_pos())
                 #gameengine.towers[-1].place_down()
                 #gameengine.add_tower("turret")
                 #gameengine.add_enemy("normal")
-                sidemenu.check_press(e.pos)
-                gameengine.placeIdleTower()
+                    sidemenu.check_press(e.pos)
+                    gameengine.placeIdleTower()
+                if e.button == 3:
+                    gameengine.idle_tower=None
             elif e.type == pg.MOUSEBUTTONUP:
                 sidemenu.release()
                 
