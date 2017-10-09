@@ -30,7 +30,7 @@ class Gameengine():
         self.tower_types = {"turret":(global_images["tower_turret"],5,200,10,150), 
                             "gatling":(global_images["tower_gatling"], 10,250, 5,250),
                             "poison":(global_images["tower_poison"], 1,150,20,200)}
-        self.bullet_types = {"turret": global_images["bullet"], 
+        self.bullet_types = {"turret": global_images["turret"], 
                              "gatling": global_images["gatling"],
                              "poison": global_images["poison"]}
         # image, speed, health, value

@@ -18,7 +18,7 @@ class Bullet:
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
         
         self.pos = Vector(pos[0],pos[1])
-        self.vel = 0.5
+        self.vel = 0.5 # perhaps later implement as 'tower-specific' variable?
         self.target = target
         self.hitpoints = hitpoints
         self.alive = True

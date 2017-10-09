@@ -9,10 +9,11 @@ from gui.Sidemenu import Sidemenu
 
 framerate = 60
 path_data   = "../res/path_points.txt" # dann in map oder level je nachdem ...
-wave_data   = "../res/.txt"
+# wave_data   = "../res/.txt" # Lars' Wavemanager!
 
 if __name__ == "__main__":
     pg.init()
+    pg.display.set_caption("TowerDefense_KIT_PY'17")
     window_size = (1280,720)
     #main_surface = pg.display.set_mode(window_size, pg.FULLSCREEN)
     main_surface = pg.display.set_mode(window_size)
@@ -50,8 +51,8 @@ if __name__ == "__main__":
                 #gameengine.towers[-1].place_down()
                 #gameengine.add_tower("turret")
                 #gameengine.add_enemy("normal")
-                gameengine.placeIdleTower()
                 sidemenu.check_press(e.pos)
+                gameengine.placeIdleTower()
             elif e.type == pg.MOUSEBUTTONUP:
                 sidemenu.release()
                 
@@ -71,4 +72,4 @@ if __name__ == "__main__":
 #        # TEST END
         
         
-        pg.display.flip()
+        pg.display.flip() # Update the full display Surface to the screen \\ Update portions of the screen for software displays

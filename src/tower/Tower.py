@@ -39,7 +39,7 @@ class Tower:
         self.image = image
         self.image = pg.transform.scale(self.image, (self.radius*2,)*2) # scale the image to size
 
-        self.alive = True
+        self.alive = True # if attackable towers are implemented in the future
         self.idle = True
         self.placeable = False
         self.edge = self.setEdgePoints()
@@ -83,8 +83,9 @@ class Tower:
                 else:
                     self.shot_dt += dt                          # count time since last shot
                 break
+                
     # aims at nearest enemy
-    def aimnear(self,dt):
+    def aimnear(self,dt): # used at all?
         if self.shooting: self.shooting = False
         
         # Find all enemies, that are in range
@@ -121,7 +122,7 @@ class Tower:
             pg.draw.circle(surface, (0,0,255), self.pos, self.shot_range,3)
         
         # Tower itself
-        render_image = pg.transform.rotozoom(self.image,-self.angle,1)
+        render_image = pg.transform.rotozoom(self.image,-self.angle,1) # rotozoom for a bit AA
         draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
         

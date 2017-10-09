@@ -45,7 +45,7 @@ class Enemy():
     def draw(self,surface):
         # render enemy
         rad2 = Vector(self.radius,self.radius)
-        render_image = pg.transform.rotozoom(self.image,-self.angle,1)
+        render_image = pg.transform.rotozoom(self.image,-self.angle,1) # rotozoom for a bit AA
         draw_center = self.pos - Vector( *render_image.get_size() )/2
         surface.blit(render_image, draw_center)
         
