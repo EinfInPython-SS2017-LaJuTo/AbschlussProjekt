@@ -1,4 +1,3 @@
-
 import pygame as pg
 
 class Label(pg.Rect):

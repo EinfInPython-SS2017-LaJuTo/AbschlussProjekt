@@ -1,4 +1,3 @@
-
 import pygame as pg
 
 from gui.Label import Label

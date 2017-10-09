@@ -86,7 +86,8 @@ class Sidemenu(pg.Rect):
         self.label_money.draw(surface)
         self.label_wave.draw(surface)
         self.label_timeleft.draw(surface)
-        
+        #if self.gameengine.health <= 0:
+        #    surface.blit(self.gameengine.global_images["game_over_sidemenu"], (0,0))
 
         for k in self.tower_keys:
             self.tower_buttons[k].draw(surface)
