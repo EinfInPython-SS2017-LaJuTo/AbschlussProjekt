@@ -6,6 +6,7 @@ from game.Gameengine import Gameengine
 from gui.Sidemenu import Sidemenu
 # import level?
 # import wave?
+# non-steering bullets ?
 
 framerate = 60
 path_data   = "../res/path_points.txt" # dann in map oder level je nachdem ...
