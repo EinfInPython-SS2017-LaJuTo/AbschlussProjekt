@@ -2,7 +2,6 @@ import pygame as pg
 
 global_images = {
         'game_over':    pg.image.load("../res/gameover.png"),
-        'game_over_sidemenu':    pg.image.load("../res/gameover_sidemenu.png"),
         'tower_turret':    pg.image.load("../res/turret_tower.png"),
         'tower_gatling':    pg.image.load("../res/gatling_tower.png"),
         'tower_poison':    pg.image.load("../res/poison_tower.png"),

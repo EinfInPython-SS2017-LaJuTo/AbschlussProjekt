@@ -33,7 +33,7 @@ class Gameengine():
                              "gatling": global_images["gatling"],
                              "poison": global_images["poison"]}
         # image, speed, health, value
-        self.enemy_types = {"normal":(global_images["enemy"],7,40,5),
+        self.enemy_types = {"normal":(global_images["enemy"],7,40,100),
                             "strong":(global_images["strong_enemy"],4,80,20)}
         
         self.money = 150

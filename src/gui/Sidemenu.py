@@ -77,19 +77,20 @@ class Sidemenu(pg.Rect):
             self.tower_buttons[k].release()
 
     def draw(self, surface):
-        surface.fill(self.bg_color, rect=self)
-        self.label_health.text = "HP " + str(self.gameengine.health)
-        self.label_money.text = "$  " + str(self.gameengine.money)
-        self.label_wave.text = "Wave " + str(self.gameengine.wavemanager.current) + "/" + str(self.gameengine.wavemanager.max)
-        self.label_timeleft.text = "Next " + str(self.gameengine.wavemanager.duration-self.gameengine.wavemanager.wavetick) + "s"
-        self.label_health.draw(surface)
-        self.label_money.draw(surface)
-        self.label_wave.draw(surface)
-        self.label_timeleft.draw(surface)
-        #if self.gameengine.health <= 0:
-        #    surface.blit(self.gameengine.global_images["game_over_sidemenu"], (0,0))
-
-        for k in self.tower_keys:
-            self.tower_buttons[k].draw(surface)
-            self.tower_cost_labels[k].draw(surface)
+        if self.gameengine.health <= 0:
+            surface.fill(self.bg_color, rect=self)
+        else:
+            surface.fill(self.bg_color, rect=self)
+            self.label_health.text = "HP " + str(self.gameengine.health)
+            self.label_money.text = "$  " + str(self.gameengine.money)
+            self.label_wave.text = "Wave " + str(self.gameengine.wavemanager.current) + "/" + str(self.gameengine.wavemanager.max)
+            self.label_timeleft.text = "Next " + str(self.gameengine.wavemanager.duration-self.gameengine.wavemanager.wavetick) + "s"
+            self.label_health.draw(surface)
+            self.label_money.draw(surface)
+            self.label_wave.draw(surface)
+            self.label_timeleft.draw(surface)
+            
+            for k in self.tower_keys:
+                self.tower_buttons[k].draw(surface)
+                self.tower_cost_labels[k].draw(surface)
 
