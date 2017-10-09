@@ -14,7 +14,6 @@ class Gameengine():
         # enemies
         # bullets 
         # tower_types, bullet_types, enemy_types
-        
         # money
         # wavetime
         
@@ -41,7 +40,6 @@ class Gameengine():
         self.health = 100
         
         self.wavemanager = Wavemanager()
-        
         
     def update(self,dt): # dt := deltatime
         # handle the idle_tower
@@ -101,7 +99,9 @@ class Gameengine():
             enemy.draw(surface)
         if self.idle_tower != None :
             self.idle_tower.draw(surface)
-            
+        if self.health <= 0:
+            surface.blit(global_images["game_over"], (0,0))
+            self.health = 0
                 
     def add_tower(self,tower_type):
         #self.towers.append( Tower(self.enemies,self.gamemap.path.subpaths, tower_type,*self.tower_types[tower_type]) )
@@ -127,7 +127,6 @@ class Gameengine():
                 self.towers.append(self.idle_tower)
                 self.idle_tower = None
             
-        
     def checkIdleTower(self):
         self.idle_tower.placeable = True
         # check if player has enough money

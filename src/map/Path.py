@@ -5,7 +5,6 @@ class Path:
     # attributes:
         # points
         # subpaths
-        
         # width
         # color
     

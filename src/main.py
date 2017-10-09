@@ -29,8 +29,7 @@ if __name__ == "__main__":
 
     while True:
         deltatime = clock.tick(framerate)
-        if gameengine.health <= 0 or not running:
-            deltatime = 0
+        
         if doublespeed:
             deltatime *=2
         
@@ -60,6 +59,10 @@ if __name__ == "__main__":
             elif e.type == pg.MOUSEBUTTONUP:
                 sidemenu.release()
                 
+        if gameengine.health <= 0 or not running:
+            deltatime = 0
+            break
+        
         # all the updating
         gameengine.update(deltatime)
 

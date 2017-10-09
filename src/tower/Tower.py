@@ -68,7 +68,6 @@ class Tower:
         else:
             self.aim(dt) # doesn't aim, if not placed down
     
-    
     # aims at enemy, furthest down the path
     def aim(self,dt):
         if self.shooting: self.shooting = False

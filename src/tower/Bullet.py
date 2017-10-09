@@ -23,7 +23,6 @@ class Bullet:
         self.hitpoints = hitpoints
         self.alive = True
         
-        
     def update(self,dt,bounds):
         # move
         direction = self.target.pos - self.pos

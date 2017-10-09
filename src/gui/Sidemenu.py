@@ -11,7 +11,6 @@ from gui.Button import Button
 #   Button to immediately send next wave
 #   Wave-Preview (how many enemies of what kind)
 
-
 class Sidemenu(pg.Rect):
 
     # atitributes:
