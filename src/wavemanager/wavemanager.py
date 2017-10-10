@@ -26,8 +26,8 @@ class Wavemanager():
         if len(self.queue) < self.duration:
             for i in range(self.duration-len(self.queue)):
                 self.queue.append("hold")
-        print("Queue loaded: ")
-        print(self.queue)
+#        print("Queue loaded: ")
+#        print(self.queue)
             
     def readLine(self,content):
         order = content[0]
@@ -51,10 +51,10 @@ class Wavemanager():
             self.wavetick += 1
             order = self.queue[0]
             del self.queue[0]
-            if order != "Hold":
-                print("Spawned: "+order)
-                print(self.queue)
-                print(str(self.duration)+" "+str(self.wavetick))
+#            if order != "Hold":
+#                print("Spawned: "+order)
+#                print(self.queue)
+#                print(str(self.duration)+" "+str(self.wavetick))
             return order
             
       
